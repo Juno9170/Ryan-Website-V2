@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         Anderson: ["Anderson", "sans-serif"],
       },
+      colors: {
+        lightGreen: "#CCE1CE",
+      },
     },
   },
   plugins: [],

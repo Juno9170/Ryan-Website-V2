@@ -1,4 +1,6 @@
 ---
+import NavigationBar from "../components/NavigationBar.astro";
+
 interface Props {
   title: string;
   description?: string;
@@ -61,7 +63,10 @@ console.log(JSON.stringify(json, null, 2));
     <meta name="generator" content={Astro.generator} />
     <title>{title} | {suffix}</title>
   </head>
-  <body class="min-h-screen font-Anderson">
+  <body class="min-h-screen">
+    <div class="w-full h-14 font-Anderson">
+      <NavigationBar />
+    </div>
     <slot />
   </body>
 </html>
