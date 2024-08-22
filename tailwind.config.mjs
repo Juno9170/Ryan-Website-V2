@@ -5,6 +5,10 @@ export default {
     extend: {
       fontFamily: {
         Anderson: ["Anderson", "sans-serif"],
+        AndersonLight: ["AndersonLight", "sans-serif"],
+        AndersonBold: ["AndersonBold", "sans-serif"],
+        AndersonBolder: ["AndersonBolder", "sans-serif"],
+        AndersonBoldest: ["AndersonBoldest", "sans-serif"],
       },
     },
   },
