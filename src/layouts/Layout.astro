@@ -1,4 +1,6 @@
 ---
+import NavigationBar from "../components/NavigationBar";
+
 interface Props {
   title: string;
   description?: string;
@@ -39,6 +41,8 @@ const response = await fetch("https://graphql.datocms.com/", {
 
 const json = await response.json();
 
+const currentPath = Astro.url.pathname;
+
 const {
   title,
   suffix = json.data._site.globalSeo.titleSuffix,
@@ -46,8 +50,6 @@ const {
   ogImage = json.data._site.globalSeo.fallbackSeo.image.url,
   favicon = json.data._site.favicon.url,
 } = Astro.props;
-
-console.log(JSON.stringify(json, null, 2));
 ---
 
 <!doctype html>
@@ -61,7 +63,10 @@ console.log(JSON.stringify(json, null, 2));
     <meta name="generator" content={Astro.generator} />
     <title>{title} | {suffix}</title>
   </head>
-  <body class="min-h-screen font-Anderson">
+  <body class="min-h-screen">
+    <div class="w-full font-Anderson">
+      <NavigationBar url={currentPath} client:load />
+    </div>
     <slot />
   </body>
 </html>
