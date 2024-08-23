@@ -13,6 +13,9 @@ export default {
       colors: {
         lightGreen: "#CCE1CE",
       },
+      boxShadow: {
+        "dark-short": "0 3px 10px rgba(0, 0, 0, 0.3)", // Adjust the values as needed
+      },
     },
   },
   plugins: [],
