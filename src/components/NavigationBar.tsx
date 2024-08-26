@@ -5,6 +5,24 @@ interface NavigationBarProps {
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = (props) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    if (!window) return;
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+      window.innerWidth > 1024 && setMenuOpen(false);
+    };
+
+    // Invoke handleResize initially
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const widths = {
     width1: 121.41,
     width2: 158.41,
@@ -67,64 +85,90 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
     <div className="">
       <div className="w-full fixed h-14 py-2 mt-3 px-8">
         <div className="bg-[#EAEAEABF] backdrop-blur-md h-full w-full rounded-full flex justify-between px-4 py-1 shadow-dark-short">
-          <div className="bg-lightGreen h-full items-center px-8 text-center justify-center rounded-full"></div>
-          <div className="flex justify-between text-[#86887B] relative">
-            <div
-              className={`transition-all duration-300 ease-[var(--ease-spring-1)] absolute h-full bg-[#C0DCC3] rounded-full ${active ? "bg-black" : "bg-[#C0DCC3]"} ${activeIndex === 0 ? "left-0" : activeIndex === 2 ? "left-full -translate-x-full" : ""}`}
-              style={
-                activeIndex === 1
-                  ? {
-                      width: highlightWidth,
-                      left: widths.width1,
-                    }
-                  : {
-                      width: highlightWidth,
-                    }
-              }
-            />
-            <a
-              href="/"
-              className={`${sharedButtonClass} ${activeIndex === 0 ? "text-black" : ""}`}
-              ref={homeButtonRef}
-              onMouseEnter={() => handleHighlightRerender(0)}
-              onMouseLeave={() => {
-                resetHighlight();
-                setActive(false);
-              }}
-              onMouseDown={() => setActive(true)}
-              onMouseUp={() => setActive(false)}
-            >
-              <button className="apperance-none">Home</button>
-            </a>
-            <a
-              href="/experience"
-              className={`${sharedButtonClass} ${activeIndex === 1 ? "text-black" : ""}`}
-              ref={experienceButtonRef}
-              onMouseEnter={() => handleHighlightRerender(1)}
-              onMouseLeave={() => {
-                resetHighlight();
-                setActive(false);
-              }}
-              onMouseDown={() => setActive(true)}
-              onMouseUp={() => setActive(false)}
-            >
-              <button className="apperance-none">Experience</button>
-            </a>
-            <a
-              href="/contact"
-              className={`${sharedButtonClass} ${activeIndex === 2 ? "text-black" : ""}`}
-              ref={contactButtonRef}
-              onMouseEnter={() => handleHighlightRerender(2)}
-              onMouseLeave={() => {
-                resetHighlight();
-                setActive(false);
-              }}
-              onMouseDown={() => setActive(true)}
-              onMouseUp={() => setActive(false)}
-            >
-              <button className="apperance-none">Contact</button>
-            </a>
+          <div className="bg-lightGreen flex tracking-[0.2rem] font-AndersonBolder h-full items-center px-8 justify-center rounded-full">
+            RZ
           </div>
+          {isMobile ? (
+            <button
+              className="flex bg-lightGreen h-full items-center px-8 text-center justify-center rounded-full"
+              onClick={() => {
+                setMenuOpen((prev) => !prev);
+              }}
+            >
+              <svg
+                width="18"
+                height="12"
+                viewBox="0 0 18 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 12V10H18V12H0ZM0 7V5H18V7H0ZM0 2V0H18V2H0Z"
+                  fill="#86887C"
+                ></path>
+              </svg>
+            </button>
+          ) : (
+            <>
+              <div className="flex justify-between text-[#86887B] relative">
+                <div
+                  className={`transition-all duration-300 ease-[var(--ease-spring-1)] absolute h-full bg-[#C0DCC3] rounded-full ${active ? "bg-black" : "bg-[#C0DCC3]"} ${activeIndex === 0 ? "left-0" : activeIndex === 2 ? "left-full -translate-x-full" : ""}`}
+                  style={
+                    activeIndex === 1
+                      ? {
+                          width: highlightWidth,
+                          left: widths.width1,
+                        }
+                      : {
+                          width: highlightWidth,
+                        }
+                  }
+                />
+                <a
+                  href="/"
+                  className={`${sharedButtonClass} ${activeIndex === 0 ? "text-black" : ""}`}
+                  ref={homeButtonRef}
+                  onMouseEnter={() => handleHighlightRerender(0)}
+                  onMouseLeave={() => {
+                    resetHighlight();
+                    setActive(false);
+                  }}
+                  onMouseDown={() => setActive(true)}
+                  onMouseUp={() => setActive(false)}
+                >
+                  <button className="apperance-none">Home</button>
+                </a>
+                <a
+                  href="/experience"
+                  className={`${sharedButtonClass} ${activeIndex === 1 ? "text-black" : ""}`}
+                  ref={experienceButtonRef}
+                  onMouseEnter={() => handleHighlightRerender(1)}
+                  onMouseLeave={() => {
+                    resetHighlight();
+                    setActive(false);
+                  }}
+                  onMouseDown={() => setActive(true)}
+                  onMouseUp={() => setActive(false)}
+                >
+                  <button className="apperance-none">Experience</button>
+                </a>
+                <a
+                  href="/contact"
+                  className={`${sharedButtonClass} ${activeIndex === 2 ? "text-black" : ""}`}
+                  ref={contactButtonRef}
+                  onMouseEnter={() => handleHighlightRerender(2)}
+                  onMouseLeave={() => {
+                    resetHighlight();
+                    setActive(false);
+                  }}
+                  onMouseDown={() => setActive(true)}
+                  onMouseUp={() => setActive(false)}
+                >
+                  <button className="apperance-none">Contact</button>
+                </a>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
