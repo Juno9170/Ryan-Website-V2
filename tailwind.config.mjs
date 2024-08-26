@@ -16,6 +16,10 @@ export default {
       boxShadow: {
         "dark-short": "0 3px 10px rgba(0, 0, 0, 0.3)", // Adjust the values as needed
       },
+      screens: {
+        xxl: "1920px",
+        xxxl: "2560px",
+      },
     },
   },
   plugins: [],
