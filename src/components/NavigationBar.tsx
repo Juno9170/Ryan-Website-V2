@@ -66,7 +66,7 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
   return (
     <div className="">
       <div className="w-full fixed h-14 py-2 mt-3 px-8">
-        <div className="bg-[#EAEAEABF] h-full w-full rounded-full flex justify-between px-4 py-1 shadow-dark-short">
+        <div className="bg-[#EAEAEABF] backdrop-blur-md h-full w-full rounded-full flex justify-between px-4 py-1 shadow-dark-short">
           <div className="bg-lightGreen h-full items-center px-8 text-center justify-center rounded-full"></div>
           <div className="flex justify-between text-[#86887B] relative">
             <div
