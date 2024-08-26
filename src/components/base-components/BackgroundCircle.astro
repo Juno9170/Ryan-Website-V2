@@ -1,0 +1,62 @@
+---
+interface Props {
+  size: number;
+  startX: number;
+  startY: number;
+  gridSize?: number;
+  gridOpacity?: number;
+}
+
+const {
+  gridSize = 80,
+  gridOpacity = 0.5,
+  size = 500,
+  startX = 250,
+  startY = 250,
+} = Astro.props;
+---
+
+<div
+  style={{
+    "--size": `${size}px`,
+    "--startX": `${startX}px`,
+    "--startY": `${startY}px`,
+    "--gridSize": `${gridSize}px`,
+    "--gridOpacity": `${gridOpacity}`,
+  }}
+  class="gridBackgroundDiv rounded-full"
+>
+</div>
+
+<style>
+  .gridBackgroundDiv {
+    width: var(--size);
+    height: var(--size);
+    background: repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent var(--gridSize),
+        rgba(255, 255, 255, var(--gridOpacity)) var(--gridSize),
+        rgba(255, 255, 255, var(--gridOpacity)) calc(var(--gridSize) + 2px)
+      ),
+      repeating-linear-gradient(
+        to top,
+        transparent,
+        transparent var(--gridSize),
+        rgba(255, 255, 255, var(--gridOpacity)) var(--gridSize),
+        rgba(255, 255, 255, var(--gridOpacity)) calc(var(--gridSize) + 2px)
+      ),
+      radial-gradient(
+        circle,
+        transparent,
+        rgba(255, 255, 255, 0.932) 60%,
+        white 70.7106781187%
+      ),
+      radial-gradient(
+        circle at var(--startX) var(--startY),
+        rgb(199, 226, 156),
+        rgb(151, 204, 197) 50%,
+        rgb(120, 167, 221) 70.7106781187%
+      );
+  }
+</style>
