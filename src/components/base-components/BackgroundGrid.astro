@@ -1,0 +1,73 @@
+---
+interface Props {
+  size?: number;
+  startX?: number;
+  startY?: number;
+  gridSize?: number;
+  gridOpacity?: number;
+}
+
+const {
+  gridSize = 80,
+  gridOpacity = 0.1,
+  size = 500,
+  startX = 250,
+  startY = 250,
+} = Astro.props;
+
+// Calculate the number of lines needed for both directions
+const horizontalLines = Array(Math.ceil(size / gridSize)).fill(0);
+const verticalLines = Array(Math.ceil(size / gridSize)).fill(0);
+
+// Create SVG paths for horizontal and vertical lines
+const horizontalPaths = horizontalLines.map((_, index) => {
+  const y = index * gridSize;
+  return `M0 ${y} H${size}`;
+});
+
+const verticalPaths = verticalLines.map((_, index) => {
+  const x = index * gridSize;
+  return `M${x} 0 V${size}`;
+});
+---
+
+<div
+  class="bgGrid rounded-full overflow-hidden"
+  style={{
+    "--startX": `${startX}px`,
+    "--startY": `${startY}px`,
+    "--gridOpacity": `${gridOpacity}`,
+  }}
+>
+  <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <mask id="grid-mask">
+        <rect width="100%" height="100%" fill="white"></rect>
+        <g stroke="black" stroke-width="2">
+          {horizontalPaths.map((d) => <path d={d} />)}
+        </g>
+        <g stroke="black" stroke-width="2">
+          {verticalPaths.map((d) => <path d={d} />)}
+        </g>
+      </mask>
+    </defs>
+    <rect width="100%" height="100%" fill="white" mask="url(#grid-mask)"></rect>
+  </svg>
+</div>
+
+<style>
+  .bgGrid {
+    background: radial-gradient(
+        circle,
+        transparent,
+        rgba(255, 255, 255, var(--gridOpacity)) 60%,
+        white 70.7106781187%
+      ),
+      radial-gradient(
+        circle at 150px 200px,
+        rgb(194, 221, 150),
+        rgb(125, 175, 179) 50%,
+        rgb(70, 136, 212) 70.7106781187%
+      );
+  }
+</style>
