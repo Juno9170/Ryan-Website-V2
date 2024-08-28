@@ -60,14 +60,14 @@ const verticalPaths = verticalLines.map((_, index) => {
     background: radial-gradient(
         circle,
         transparent,
-        rgba(255, 255, 255, var(--gridOpacity)) 60%,
+        rgba(255, 255, 255, 0.932) 60%,
         white 70.7106781187%
       ),
       radial-gradient(
         circle at 150px 200px,
-        rgb(194, 221, 150),
-        rgb(125, 175, 179) 50%,
-        rgb(70, 136, 212) 70.7106781187%
+        rgb(194, 221, 150, var(--gridOpacity)),
+        rgb(125, 175, 179, var(--gridOpacity)) 50%,
+        rgb(70, 136, 212, var(--gridOpacity)) 70.7106781187%
       );
   }
 </style>
