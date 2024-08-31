@@ -9,6 +9,16 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
   const [isMobile, setIsMobile] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [loc, setLoc] = useState("");
+  const handleMobileNav = (href: string) => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (loc === href) {
+      toggleMenu();
+    } else {
+      window.location.href = href;
+    }
+  };
   useEffect(() => {
     if (typeof window === "undefined") return;
     setLoc(window.location.pathname);
@@ -108,10 +118,10 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
       {isMobile ? (
         <>
           <div
-            className={`${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"} transition-all duration-100 ease-linear fixed w-screen h-screen transform-gpu will-change-auto bg-[#ffffff] z-[500]`}
+            className={`${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"} transition-all duration-100 ease-linear fixed w-screen h-screen bg-[#ffffff] z-[500]`}
           />
           <div
-            className={`${menuOpen ? "w-[200vh] h-[200vh] ease-linear" : "w-0 h-0 invisible ease-linear delay-[-50ms]"} transition-all rounded-bl-full duration-300 z-[1000] transform-gpu will-change-auto right-0 fixed bg-[#ECF2E4]`}
+            className={`${menuOpen ? "w-[200vh] h-[200vh] ease-linear" : "w-0 h-0 invisible ease-in delay-[-100ms]"} transition-all rounded-bl-full duration-300 z-[1000] right-0 fixed bg-[#ECF2E4]`}
           />
 
           <div
@@ -125,53 +135,30 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
               ].map((buttonInfo) => {
                 return (
                   <div className={` text-4xl`}>
-                    <div className="flex">
-                      {loc !== buttonInfo.pathName ? (
-                        <a
-                          href={buttonInfo.pathName}
-                          className="flex gap-4 appearance-none"
+                    <button
+                      className="flex gap-5"
+                      onClick={() => handleMobileNav(buttonInfo.pathName)}
+                    >
+                      <div className="flex flex-col justify-center">
+                        <svg
+                          width="22"
+                          height="22"
+                          viewBox="0 0 15 15"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          <button>
-                            <svg
-                              width="22"
-                              height="22"
-                              viewBox="0 0 15 15"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M1.93317 15.0001L0.416504 13.4834L10.8165 3.08341H1.49984V0.916748H14.4998V13.9167H12.3332V4.60008L1.93317 15.0001Z"
-                                fill="#B9BDAF"
-                              ></path>
-                            </svg>
-                          </button>
-
-                          <button className="text-transparent bg-clip-text bg-[#B9BDAF]">
-                            {buttonInfo.name}
-                          </button>
-                        </a>
-                      ) : (
-                        <div className="flex gap-4">
-                          <button>
-                            <svg
-                              width="22"
-                              height="22"
-                              viewBox="0 0 15 15"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M1.93317 15.0001L0.416504 13.4834L10.8165 3.08341H1.49984V0.916748H14.4998V13.9167H12.3332V4.60008L1.93317 15.0001Z"
-                                fill="#8DB9AA"
-                              ></path>
-                            </svg>
-                          </button>
-                          <button className="text-transparent bg-clip-text bg-gradient-to-r from-[#F8E9A6] to-[#8DB9AA]">
-                            {buttonInfo.name}
-                          </button>
-                        </div>
-                      )}
-                    </div>
+                          <path
+                            d="M1.93317 15.0001L0.416504 13.4834L10.8165 3.08341H1.49984V0.916748H14.4998V13.9167H12.3332V4.60008L1.93317 15.0001Z"
+                            fill={`${loc === buttonInfo.pathName ? "#8DB9AA" : "#B9BDAF"}`}
+                          ></path>
+                        </svg>
+                      </div>
+                      <div
+                        className={`text-transparent bg-clip-text bg-gradient-to-r ${loc === buttonInfo.pathName ? "from-[#F8E9A6] to-[#8DB9AA]" : "bg-[#B9BDAF]"} `}
+                      >
+                        {buttonInfo.name}
+                      </div>
+                    </button>
                   </div>
                 );
               })}
