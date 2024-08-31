@@ -137,10 +137,10 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
                 return (
                   <div className={` text-4xl`}>
                     <button
-                      className="flex gap-5"
+                      className="flex gap-5 items-center"
                       onClick={() => handleMobileNav(buttonInfo.pathName)}
                     >
-                      <div className="flex flex-col justify-center">
+                      <div className="flex ">
                         <svg
                           width="22"
                           height="22"
@@ -174,8 +174,12 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
           </div>
           {isMobile ? (
             <button
-              className="flex bg-lightGreen h-full items-center px-8 text-center justify-center rounded-full"
-              onTouchStart={toggleMenu}
+              className="flex bg-lightGreen h-full items-center px-8 text-center justify-center rounded-full cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+              }}
             >
               <svg
                 width="18"
