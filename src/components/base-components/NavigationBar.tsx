@@ -13,7 +13,7 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
     if (typeof window === "undefined") {
       return;
     }
-    if (loc === href) {
+    if (loc === href || loc === href.slice(0, -1)) {
       toggleMenu();
     } else {
       window.location.href = href;
@@ -131,8 +131,8 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
             <div className="flex flex-col pl-16 pt-32 gap-20 text-[#B9BDAF]">
               {[
                 { name: "Home", pathName: "/" },
-                { name: "Experience", pathName: "/experience" },
-                { name: "Contact", pathName: "/contact" },
+                { name: "Experience", pathName: "/experience/" },
+                { name: "Contact", pathName: "/contact/" },
               ].map((buttonInfo) => {
                 return (
                   <div className={` text-4xl`}>
