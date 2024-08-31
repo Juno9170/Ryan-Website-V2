@@ -1,0 +1,10 @@
+.mobileButton {
+  background: linear-gradient(
+    to right,
+    #ff7e5f,
+    #feb47b
+  ); /* Adjust gradient colors as needed */
+  -webkit-background-clip: text; /* This is for webkit browsers */
+  background-clip: text;
+  color: transparent; /* Makes the text color transparent to show the gradient */
+}

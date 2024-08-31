@@ -1,6 +1,5 @@
 ---
 import NavigationBar from "../components/base-components/NavigationBar";
-
 interface Props {
   title: string;
   description?: string;
@@ -63,10 +62,10 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title} | {suffix}</title>
   </head>
-  <body class="min-h-screen">
+  <body id="body" class="min-h-screen">
     <div class="w-full font-Anderson">
       <NavigationBar url={currentPath} client:load />
+      <slot />
     </div>
-    <slot />
   </body>
 </html>
