@@ -22,6 +22,7 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
   useEffect(() => {
     if (typeof window === "undefined") return;
     setLoc(window.location.pathname);
+    console.log(window.location.pathname);
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1024);
       if (window.innerWidth > 1024) setMenuOpen(false);
