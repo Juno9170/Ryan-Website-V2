@@ -4,7 +4,10 @@ import BioHeader from "../components/home-page/BioHeader.astro";
 import TimeLineSection from "../components/time-line/TimeLineSection.tsx";
 interface ImageSchema {
   alt?: string;
-  url: string;
+  avifUrl?: string;
+  webpUrl?: string;
+  jpgUrl?: string;
+  fallbackUrl: string;
 }
 
 interface ProjectSchema {
