@@ -5,7 +5,10 @@ interface ProjectSchema {
   shortDescription: string;
   primaryImage: {
     alt?: string;
-    url: string;
+    avifUrl?: string;
+    webpUrl?: string;
+    jpgUrl?: string;
+    fallbackUrl: string;
   };
 }
 interface Props {
@@ -15,7 +18,7 @@ interface Props {
 const TimeLineProject: React.FC<Props> = ({ project, index }) => {
   return (
     <div>
-      {project.date} {index}
+      <img src={project.primaryImage.avifUrl}/>
     </div>
   );
 };

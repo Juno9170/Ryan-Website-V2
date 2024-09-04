@@ -1,13 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 import Draggable from "react-draggable";
 import type { DraggableEvent, DraggableData } from "react-draggable";
+import TimeLineProject from "./TimeLineProject";
 interface ProjectSchema {
   date: string;
   technologies: Array<string>;
   shortDescription: string;
   primaryImage: {
     alt?: string;
-    url: string;
+    avifUrl?: string;
+    webpUrl?: string;
+    jpgUrl?: string;
+    fallbackUrl: string;
   };
 }
 
@@ -16,85 +20,7 @@ interface TimeLineProps {
 }
 
 const TimeLine: React.FC<TimeLineProps> = ({ projects }) => {
-  projects = [
-    {
-      date: "2024-03-01",
-      technologies: ["Tech1"],
-      shortDescription: "Short description for proj beta",
-      primaryImage: {
-        alt: undefined,
-        url: "https://www.datocms-assets.com/138973/1725125156-16_9-2-width-2000.png",
-      },
-    },
-    {
-      date: "2024-03-28",
-      technologies: ["css"],
-      shortDescription:
-        "Short description for project omega, this is the second project this month.",
-      primaryImage: {
-        alt: undefined,
-        url: "https://www.datocms-assets.com/138973/1725125156-16_9-2-width-2000.png",
-      },
-    },
-    {
-      date: "2024-03-01",
-      technologies: ["Tech1"],
-      shortDescription: "Short description for proj beta",
-      primaryImage: {
-        alt: undefined,
-        url: "https://www.datocms-assets.com/138973/1725125156-16_9-2-width-2000.png",
-      },
-    },
-    {
-      date: "2024-05-01",
-      technologies: ["css", "html"],
-      shortDescription: "Test Short Description",
-      primaryImage: {
-        alt: "Placeholder Image",
-        url: "https://www.datocms-assets.com/138973/1724288599-image-5-1.png",
-      },
-    },
-    {
-      date: "2024-07-31",
-      technologies: ["Astro", "HTML", "CSS", "Tech 3"],
-      shortDescription:
-        "This is the short description of project alpha. This short description should include things that I did and the overarching goal of the project.",
-      primaryImage: {
-        alt: undefined,
-        url: "https://www.datocms-assets.com/138973/1725125156-16_9-2-width-2000.png",
-      },
-    },
-    {
-      date: "2024-07-31",
-      technologies: ["Astro", "HTML", "CSS", "Tech 3"],
-      shortDescription:
-        "This is the short description of project alpha. This short description should include things that I did and the overarching goal of the project.",
-      primaryImage: {
-        alt: undefined,
-        url: "https://www.datocms-assets.com/138973/1725125156-16_9-2-width-2000.png",
-      },
-    },
-    {
-      date: "2025-07-31",
-      technologies: ["Astro", "HTML", "CSS", "Tech 3"],
-      shortDescription:
-        "This is the short description of project alpha. This short description should include things that I did and the overarching goal of the project.",
-      primaryImage: {
-        alt: undefined,
-        url: "https://www.datocms-assets.com/138973/1725125156-16_9-2-width-2000.png",
-      },
-    },
-    {
-      date: "2026-07-31",
-      technologies: ["Astro", "HTML", "CSS", "Tech 3"],
-      shortDescription:
-        "This is the short description of project alpha. This short description should include things that I did and the overarching goal of the project.",
-      primaryImage: {
-        alt: undefined,
-        url: "https://www.datocms-assets.com/138973/1725125156-16_9-2-width-2000.png",
-      },
-    },
-  ];
+  
   const [viewportWidth, setViewportWidth] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth : 0,
   );
@@ -184,6 +110,9 @@ const TimeLine: React.FC<TimeLineProps> = ({ projects }) => {
 
   return (
     <div>
+      <div>
+        <TimeLineProject project={projects[0]} index={0}/>
+      </div>
       <Draggable
         axis="x"
         onStop={handleStop}

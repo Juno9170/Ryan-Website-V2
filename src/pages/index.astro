@@ -38,7 +38,10 @@ const fetchData = async (): Promise<ProjectSchema[]> => {
               shortDescription
               primaryImage {
                 alt
-                url
+                avifUrl: url(imgixParams: {q: 50, fm: avif, w: 800})
+                webpUrl: url(imgixParams: {q: 65, fm: webp, w: 800})
+                jpgUrl: url(imgixParams: {q: 80, fm: jpg, w: 800})
+                fallbackUrl: url
               }
             }
           }
