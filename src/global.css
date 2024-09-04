@@ -1,30 +1,34 @@
 @font-face {
   font-family: "Anderson";
   src: url("/fonts/AndersonGrotesk.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "AndersonLight";
   src: url("/fonts/AndersonGrotesk-Light.otf") format("opentype");
   font-weight: lighter;
-  font-style: lighter;
+  font-style: normal;
+  font-display: swap;
 }
-
 @font-face {
   font-family: "AndersonBold";
   src: url("/fonts/AndersonGrotesk-Bold.otf") format("opentype");
   font-weight: bold;
-  font-style: bold;
+  font-style: normal;
+  font-display: swap;
 }
-
 @font-face {
   font-family: "AndersonBolder";
   src: url("/fonts/AndersonGrotesk-Ultrabold.otf") format("opentype");
   font-weight: bolder;
-  font-style: bolder;
+  font-style: normal;
+  font-display: swap;
 }
-
 @font-face {
   font-family: "AndersonBoldest";
   src: url("/fonts/AndersonGrotesk-Black.otf") format("opentype");
   font-weight: 900;
+  font-display: swap;
 }
