@@ -5,6 +5,7 @@
     "moduleResolution": "Bundler",
     "target": "ES2022",
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
+    "allowImportingTsExtensions": true
   }
 }
