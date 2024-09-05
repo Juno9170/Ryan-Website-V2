@@ -95,9 +95,7 @@ const TimeLine: React.FC<TimeLineProps> = ({
 
   return (
     <div>
-      <div>
-        <TimeLineProject project={projects[0]} index={0} />
-      </div>
+      <TimeLineProject project={projects[0]} index={0} />
       <Draggable
         axis="x"
         onStop={handleStop}
