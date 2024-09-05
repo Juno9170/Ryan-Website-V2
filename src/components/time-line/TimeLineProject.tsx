@@ -5,7 +5,10 @@ interface ProjectSchema {
   shortDescription: string;
   primaryImage: {
     alt?: string;
-    url: string;
+    avifUrl?: string;
+    webpUrl?: string;
+    jpgUrl?: string;
+    fallbackUrl: string;
   };
 }
 interface Props {
