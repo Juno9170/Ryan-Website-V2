@@ -1,6 +1,7 @@
 import React, { useMemo, useCallback, useState, useEffect } from "react";
 import TimeLine from "./TimeLine";
 interface ProjectSchema {
+  projectTitle:string;
   date: string;
   technologies: Array<string>;
   shortDescription: string;

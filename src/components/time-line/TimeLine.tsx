@@ -3,6 +3,7 @@ import Draggable from "react-draggable";
 import type { DraggableEvent, DraggableData } from "react-draggable";
 import TimeLineProject from "./TimeLineProject";
 interface ProjectSchema {
+  projectTitle:string;
   date: string;
   technologies: Array<string>;
   shortDescription: string;
@@ -95,13 +96,13 @@ const TimeLine: React.FC<TimeLineProps> = ({
 
   return (
     <div>
-      <TimeLineProject project={projects[0]} index={0} />
+      <TimeLineProject project={projects[1]} index={1} />
       <Draggable
         axis="x"
         onStop={handleStop}
         onStart={handleStart}
         position={{ x: finalX, y: 0 }}
-        defaultClassName={draggableClassName}
+        defaultClassName={`${draggableClassName} will-change-transform`}
         defaultClassNameDragging="transition-none"
       >
         <div>
