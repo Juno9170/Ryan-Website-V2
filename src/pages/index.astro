@@ -1,17 +1,20 @@
 ---
+import "../global.css";
 import Layout from "../layouts/Layout.astro";
 import BioHeader from "../components/home-page/BioHeader.astro";
 import TimeLineSection from "../components/time-line/TimeLineSection.tsx";
 interface ImageSchema {
-    alt?: string;
-    avifUrl?: string;
-    webpUrl?: string;
-    jpgUrl?: string;
-    fallbackUrl: string;
+  alt?: string;
+  avifUrl?: string;
+  webpUrl?: string;
+  jpgUrl?: string;
+  fallbackUrl: string;
 }
 
 interface ProjectSchema {
-  projectTitle:string;
+  githubLink: string;
+  projectLink: string;
+  projectTitle: string;
   date: string;
   technologies: Array<string>;
   shortDescription: string;
@@ -37,6 +40,8 @@ const fetchData = async (): Promise<ProjectSchema[]> => {
         query: `
           query MyQuery {
             allProjects(orderBy: date_ASC) {
+    					githubLink
+    					projectLink
               projectTitle
               date
               technologies

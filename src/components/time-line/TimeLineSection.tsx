@@ -1,7 +1,9 @@
 import React, { useMemo, useCallback, useState, useEffect } from "react";
 import TimeLine from "./TimeLine";
 interface ProjectSchema {
-  projectTitle:string;
+  githubLink: string;
+  projectLink: string;
+  projectTitle: string;
   date: string;
   technologies: Array<string>;
   shortDescription: string;
@@ -19,7 +21,7 @@ interface TimeLineProps {
 }
 
 const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
-  const timeLineWidth = 500;
+  const timeLineWidth = 400;
   const projectsFiltered = projects;
 
   const [viewportWidth, setViewportWidth] = useState(() =>
@@ -31,24 +33,32 @@ const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
+  function calculateDateDifferences(dates: string[]): number[] {
+    const daysInMonth = 30;
+    const daysInYear = 12 * daysInMonth;
+
+    const differences: number[] = [];
+
+    for (let i = 0; i < dates.length - 1; i++) {
+      const [year1, month1, day1] = dates[i].split("-").map(Number);
+      const [year2, month2, day2] = dates[i + 1].split("-").map(Number);
+
+      // Calculate total days for both dates from the start of the calendar
+      const totalDays1 = year1 * daysInYear + month1 * daysInMonth + day1;
+      const totalDays2 = year2 * daysInYear + month2 * daysInMonth + day2;
+
+      // Calculate the difference in days between the two dates
+      const difference = totalDays2 - totalDays1;
+
+      differences.push(difference);
+    }
+
+    return differences;
+  }
 
   const timeLineDataArray = useMemo(() => {
-    const data: Array<number> = [];
-    let currentYearMonth: string = `${projects[0].date.split("-")[0]}-${projects[0].date.split("-")[1]}`;
-    let currentCount: number = 0;
-    projects.forEach((item) => {
-      const [year, month] = item.date.split("-");
-      const yearMonth = `${year}-${month}`;
-      if (yearMonth === currentYearMonth) {
-        currentCount++;
-      } else {
-        data.push(currentCount);
-        currentYearMonth = yearMonth;
-        currentCount = 1;
-      }
-    });
-    data.push(currentCount);
-    return data;
+    const dates = projects.map((obj) => obj.date);
+    return calculateDateDifferences(dates);
   }, [projects]);
 
   const snappingOffsets = useMemo(() => {
@@ -56,32 +66,29 @@ const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
     offsets.push(viewportWidth / 2 - 24);
     timeLineDataArray.forEach((item, index) => {
       if (index === timeLineDataArray.length - 1) {
-        offsets.push(offsets[offsets.length - 1] - item * timeLineWidth - 52);
+        offsets.push(
+          offsets[offsets.length - 1] -
+            Math.pow(item * timeLineWidth, 2 / 3) -
+            52,
+        );
       } else {
-        offsets.push(offsets[offsets.length - 1] - item * timeLineWidth - 48);
+        offsets.push(
+          offsets[offsets.length - 1] -
+            Math.pow(item * timeLineWidth, 2 / 3) -
+            48,
+        );
       }
     });
     return offsets;
   }, [timeLineDataArray, viewportWidth, timeLineWidth]);
 
-  const initOffset = useMemo(() => {
-    return (
-      timeLineDataArray.reduce(
-        (accumulator, currentValue) => accumulator + currentValue,
-        0,
-      ) *
-        timeLineWidth +
-      timeLineDataArray.length * 48 +
-      28
-    );
-  }, [timeLineDataArray, timeLineWidth]);
   return (
     <div>
       <TimeLine
         projects={projectsFiltered}
         timeLineWidth={timeLineWidth}
         viewportWidth={viewportWidth}
-        initOffset={initOffset}
+        initOffset={snappingOffsets[snappingOffsets.length - 1]}
         snappingOffsets={snappingOffsets}
         timeLineDataArray={timeLineDataArray}
       />

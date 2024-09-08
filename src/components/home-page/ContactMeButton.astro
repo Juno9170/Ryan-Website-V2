@@ -4,9 +4,14 @@ interface Props {
 }
 const { className } = Astro.props;
 import OutArrow from "../../assets/OutArrow.astro";
+import "open-props/easings";
 ---
 
-<a class={className} href="/contact">
+<a
+  class={className}
+  style={{ transitionTimingFunction: "var(--ease-spring-2)" }}
+  href="/contact"
+>
   <button
     class="shadow-dark-short hover:bg-[#55766B] active:bg-black transition-all duration-200 ease-out w-full h-full rounded-full bg-[#8DB9AA] text-white flex justify-center items-center"
   >

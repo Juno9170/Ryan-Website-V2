@@ -3,7 +3,9 @@ import Draggable from "react-draggable";
 import type { DraggableEvent, DraggableData } from "react-draggable";
 import TimeLineProject from "./TimeLineProject";
 interface ProjectSchema {
-  projectTitle:string;
+  githubLink: string;
+  projectLink: string;
+  projectTitle: string;
   date: string;
   technologies: Array<string>;
   shortDescription: string;
@@ -70,10 +72,12 @@ const TimeLine: React.FC<TimeLineProps> = ({
     },
     [],
   );
-  const [draggableClassName, setClassName] = useState<string>("");
+  const [draggableClassName, setClassName] = useState<string>(
+    "transition-transform duration-1000 ease-out",
+  );
   const draggedX = useRef<number>(0);
   const startX = useRef<number>(0);
-  const [finalX, setFinalX] = useState<number>(viewportWidth / 2 - initOffset);
+  const [finalX, setFinalX] = useState<number>(initOffset);
   const handleStop = (e: DraggableEvent, data: DraggableData) => {
     draggedX.current = data.x;
     if (draggedX.current - 150 > startX.current) {
@@ -93,12 +97,25 @@ const TimeLine: React.FC<TimeLineProps> = ({
     startX.current = data.x;
     setClassName("transition-none");
   };
-
+  const getProjectCardOffset = (index: number): number => {
+    const baseOffset = index * -288 - 124;
+    const circleOffset = index * 48;
+    const linesPassed = timeLineDataArray.slice(0, index);
+    const lineLengthsPassed = linesPassed.map((line) =>
+      Math.pow(timeLineWidth * line, 2 / 3),
+    );
+    const sum: number = lineLengthsPassed.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0,
+    );
+    return baseOffset + circleOffset + sum;
+  };
   return (
     <div>
-      <TimeLineProject project={projects[1]} index={1} />
       <Draggable
+        allowAnyClick
         axis="x"
+        cancel="#test"
         onStop={handleStop}
         onStart={handleStart}
         position={{ x: finalX, y: 0 }}
@@ -106,15 +123,34 @@ const TimeLine: React.FC<TimeLineProps> = ({
         defaultClassNameDragging="transition-none"
       >
         <div>
-          <TimeLineProject project={projects[0]} index={0} />
+          <div id="test" className="appearance-none flex">
+            {projects.map((project, index) => (
+              <div
+                style={{
+                  transform: `translateX(${getProjectCardOffset(index)}px)`,
+                }}
+              >
+                <TimeLineProject
+                  project={project}
+                  index={index}
+                  hoverable={
+                    draggableClassName ===
+                    "transition-transform duration-1000 ease-out"
+                  }
+                />
+              </div>
+            ))}
+          </div>
 
-          <div className="w-fit h-6 flex items-center">
+          <div className="w-fit h-6 flex items-center mt-5">
             <div className={`rounded-full bg-[#D9D9D9] h-4 w-4 mx-4 `} />
             {timeLineDataArray.map((lineData, index) => (
               <>
                 <div
                   className={`rounded-full bg-gradient-to-r h-1.5  ${index === timeLineDataArray.length - 1 ? "from-[#F8E9A6] to-[#F0F0ED] to-50%" : "from-[#F8E9A6] via-[#8DB9AA] to-[#F8E9A6]"} `}
-                  style={{ width: `${lineData * timeLineWidth}px` }}
+                  style={{
+                    width: `${Math.pow(lineData * timeLineWidth, 2 / 3)}px`,
+                  }}
                 />
                 {index !== timeLineDataArray.length - 1 ? (
                   <div className={`rounded-full bg-[#D9D9D9] h-4 w-4 mx-4`} />
