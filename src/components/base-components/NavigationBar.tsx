@@ -29,7 +29,6 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
   // State to store the widths
 
   const handleHighlightRerender = (index: number) => {
-    console.log("Handling,", index);
     switch (index) {
       case 0:
         setHighlightWidth(widths.width1);
@@ -70,15 +69,17 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
           <div className="bg-lightGreen h-full items-center px-8 text-center justify-center rounded-full"></div>
           <div className="flex justify-between text-[#86887B] relative">
             <div
-              className={`transition-all duration-300 ease-[var(--ease-spring-1)] absolute h-full bg-[#C0DCC3] rounded-full ${active ? "bg-black" : "bg-[#C0DCC3]"} ${activeIndex === 0 ? "left-0" : activeIndex === 2 ? "left-full -translate-x-full" : ""}`}
+              className={`transition-all duration-300 absolute h-full bg-[#C0DCC3] rounded-full ${active ? "bg-black" : "bg-[#C0DCC3]"} ${activeIndex === 0 ? "left-0" : activeIndex === 2 ? "left-full -translate-x-full" : ""}`}
               style={
                 activeIndex === 1
                   ? {
                       width: highlightWidth,
                       left: widths.width1,
+                      transitionTimingFunction: "var(--ease-spring-1)",
                     }
                   : {
                       width: highlightWidth,
+                      transitionTimingFunction: "var(--ease-spring-1)",
                     }
               }
             />

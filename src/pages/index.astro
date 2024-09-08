@@ -1,6 +1,77 @@
 ---
+import "../global.css";
 import Layout from "../layouts/Layout.astro";
 import BioHeader from "../components/home-page/BioHeader.astro";
+import TimeLineSection from "../components/time-line/TimeLineSection.tsx";
+interface ImageSchema {
+  alt?: string;
+  avifUrl?: string;
+  webpUrl?: string;
+  jpgUrl?: string;
+  fallbackUrl: string;
+}
+
+interface ProjectSchema {
+  githubLink: string;
+  projectLink: string;
+  projectTitle: string;
+  date: string;
+  technologies: Array<string>;
+  shortDescription: string;
+  primaryImage: ImageSchema;
+}
+
+interface DataSchema {
+  data: {
+    allProjects: Array<ProjectSchema>;
+  };
+}
+
+const fetchData = async (): Promise<ProjectSchema[]> => {
+  try {
+    const response = await fetch("https://graphql.datocms.com/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${import.meta.env.DATOCMS_API_KEY}`,
+      },
+      body: JSON.stringify({
+        query: `
+          query MyQuery {
+            allProjects(orderBy: date_ASC) {
+    					githubLink
+    					projectLink
+              projectTitle
+              date
+              technologies
+              shortDescription
+              primaryImage {
+                alt
+                avifUrl: url(imgixParams: {q: 50, fm: avif, w: 800})
+                webpUrl: url(imgixParams: {q: 65, fm: webp, w: 800})
+                jpgUrl: url(imgixParams: {q: 80, fm: jpg, w: 800})
+                fallbackUrl: url
+              }
+            }
+          }
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const json: DataSchema = await response.json();
+    return json.data.allProjects;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    return []; // Return an empty array or handle the error appropriately
+  }
+};
+
+const projects = await fetchData();
 ---
 
 <Layout
@@ -9,5 +80,6 @@ import BioHeader from "../components/home-page/BioHeader.astro";
 >
   <div class="h-[1000vh]">
     <BioHeader />
+    <TimeLineSection projects={projects} client:only="react" />
   </div>
 </Layout>
