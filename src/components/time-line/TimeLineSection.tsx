@@ -21,7 +21,7 @@ interface TimeLineProps {
 }
 
 const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
-  const timeLineWidth = 400;
+  const timeLineWidth = 150;
   const projectsFiltered = projects;
 
   const [viewportWidth, setViewportWidth] = useState(() =>
@@ -68,13 +68,13 @@ const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
       if (index === timeLineDataArray.length - 1) {
         offsets.push(
           offsets[offsets.length - 1] -
-            Math.pow(item * timeLineWidth, 2 / 3) -
+            Math.pow(item, 1 / 3) * timeLineWidth -
             52,
         );
       } else {
         offsets.push(
           offsets[offsets.length - 1] -
-            Math.pow(item * timeLineWidth, 2 / 3) -
+            Math.pow(item, 1 / 3) * timeLineWidth -
             48,
         );
       }
@@ -83,7 +83,7 @@ const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
   }, [timeLineDataArray, viewportWidth, timeLineWidth]);
 
   return (
-    <div>
+    <div className="w-full overflow-x-hidden">
       <TimeLine
         projects={projectsFiltered}
         timeLineWidth={timeLineWidth}

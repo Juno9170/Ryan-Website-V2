@@ -101,8 +101,8 @@ const TimeLine: React.FC<TimeLineProps> = ({
     const baseOffset = index * -288 - 124;
     const circleOffset = index * 48;
     const linesPassed = timeLineDataArray.slice(0, index);
-    const lineLengthsPassed = linesPassed.map((line) =>
-      Math.pow(timeLineWidth * line, 2 / 3),
+    const lineLengthsPassed = linesPassed.map(
+      (line) => Math.pow(line, 1 / 3) * timeLineWidth,
     );
     const sum: number = lineLengthsPassed.reduce(
       (accumulator, currentValue) => accumulator + currentValue,
@@ -149,7 +149,7 @@ const TimeLine: React.FC<TimeLineProps> = ({
                 <div
                   className={`rounded-full bg-gradient-to-r h-1.5  ${index === timeLineDataArray.length - 1 ? "from-[#F8E9A6] to-[#F0F0ED] to-50%" : "from-[#F8E9A6] via-[#8DB9AA] to-[#F8E9A6]"} `}
                   style={{
-                    width: `${Math.pow(lineData * timeLineWidth, 2 / 3)}px`,
+                    width: `${Math.pow(lineData, 1 / 3) * timeLineWidth}px`,
                   }}
                 />
                 {index !== timeLineDataArray.length - 1 ? (

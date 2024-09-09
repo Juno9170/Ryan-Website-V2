@@ -76,7 +76,7 @@ const TimeLineProject: React.FC<Props> = ({ project, index, hoverable }) => {
             />
           </picture>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#8db9aab2] from-25% to-[#d9d9d96c] z-10 group-hover:brightness-50 transition-all duration-500 ease-in-out" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#8db9aab2] from-25% to-[#d9d9d96c] z-10 group-hover:brightness-[0%] transition-all duration-500 ease-in-out" />
 
           <div className="relative z-20 h-full flex flex-col justify-end p-6  text-white w-full">
             <h2 className="text-2xl font-bold mb-2 transition-all ease-in-out translate-y-0 duration-700 group-hover:-translate-y-6">
