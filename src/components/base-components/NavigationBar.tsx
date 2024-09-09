@@ -122,7 +122,8 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
             className={`${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"} transition-all duration-100 ease-linear fixed w-screen h-screen bg-[#ffffff] z-[500]`}
           />
           <div
-            className={`${menuOpen ? "w-[200vh] h-[200vh] ease-linear" : "w-0 h-0 invisible ease-in delay-[-100ms]"} transition-all rounded-bl-full duration-300 z-[1000] right-0 fixed bg-[#ECF2E4]`}
+            className={`${menuOpen ? "w-[200vh] h-[200vh] ease-linear" : "w-0 h-0 invisible ease-in"} transition-all rounded-bl-full duration-300 z-[1000] right-0 fixed bg-[#ECF2E4]`}
+            style={menuOpen ? { transitionDelay: "-100ms" } : {}}
           />
 
           <div
@@ -198,15 +199,17 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
             <>
               <div className="flex justify-between text-[#86887B] relative">
                 <div
-                  className={`transition-all duration-300 ease-[var(--ease-spring-1)] absolute h-full bg-[#C0DCC3] rounded-full ${active ? "bg-black" : "bg-[#C0DCC3]"} ${activeIndex === 0 ? "left-0" : activeIndex === 2 ? "left-full -translate-x-full" : ""}`}
+                  className={`transition-all duration-300 absolute h-full bg-[#C0DCC3] rounded-full ${active ? "bg-black" : "bg-[#C0DCC3]"} ${activeIndex === 0 ? "left-0" : activeIndex === 2 ? "left-full -translate-x-full" : ""}`}
                   style={
                     activeIndex === 1
                       ? {
                           width: highlightWidth,
                           left: widths.width1,
+                          transitionTimingFunction: "var(--ease-spring-1)",
                         }
                       : {
                           width: highlightWidth,
+                          transitionTimingFunction: "var(--ease-spring-1)",
                         }
                   }
                 />
