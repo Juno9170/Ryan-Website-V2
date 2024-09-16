@@ -1,6 +1,66 @@
 ---
 import SkillCarousel from "./SkillCarousel";
+
+interface SkillSchema {
+  name: string;
+  relatedSkills: String[];
+  value: Record<string, any>;
+  icon: {
+    avifUrl?: string;
+    webpUrl?: string;
+    fallbackUrl: string;
+  };
+}
+
+interface AllSkillSchema {
+  data: {
+    allSkills: Array<SkillSchema>;
+  };
+}
+
+const fetchData = async (): Promise<SkillSchema[]> => {
+  try {
+    const response = await fetch("https://graphql.datocms.com/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${import.meta.env.DATOCMS_API_KEY}`,
+      },
+      body: JSON.stringify({
+        query: `
+          query MyQuery {
+          allSkills {
+            fullBodyDescription {
+              value
+            }
+            name
+            relatedSkills
+            icon {
+              alt
+              avifUrl: url(imgixParams: {w: 300, fm:avif, q:40})
+              webpUrl: url(imgixParams: {w: 300, fm:webp, q:40})
+              fallbackUrl: url(imgixParams: {w: 300, fm:jpg, q:70})
+            }
+          }
+        }
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const json: AllSkillSchema = await response.json();
+    return json.data.allSkills;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    return []; // Return an empty array or handle the error appropriately
+  }
+};
+
+const skills = await fetchData();
 ---
 
-  <SkillCarousel client:load />
-
+<SkillCarousel skills={skills} client:load />

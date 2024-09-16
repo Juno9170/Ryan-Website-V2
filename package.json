@@ -24,6 +24,7 @@
     "open-props": "^1.7.5",
     "pnpm": "^9.9.0",
     "react": "^18.3.1",
+    "react-datocms": "^7.0.1",
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
     "tailwind-merge": "^2.5.2",
