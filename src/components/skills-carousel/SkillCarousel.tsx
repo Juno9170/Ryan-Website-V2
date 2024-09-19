@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { type CarouselApi } from "@/components/ui/carousel";
+import { ArrowUpDown } from "lucide-react";
+import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
 import {
   Carousel,
   CarouselContent,
@@ -12,7 +14,9 @@ interface PropsSchema {
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
-  value: Record<string, any>;
+  fullBodyDescription:{
+    value: TypesafeStructuredTextGraphQlResponse;
+  }
   icon: {
     avifUrl?: string;
     webpUrl?: string;
@@ -97,11 +101,13 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
                         alt={`${skill.name || ""} Skill Icon`}
                         loading="eager"
                         decoding="async"
-                        className=" xxl:h-28"
+                        className=" h-20 xxl:h-28"
                       />
                     </picture>
                   </div>
-                  <div className="">show</div>
+                  <div className=" xl: rotate-90 pt-20">
+                    <ArrowUpDown strokeWidth={1.25}/>
+                  </div>
                 </div>
               </CarouselItem>
             ))}
