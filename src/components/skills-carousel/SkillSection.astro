@@ -65,9 +65,13 @@ const fetchData = async (): Promise<SkillSchema[]> => {
 
 const skills = await fetchData();
 ---
+
 <div class="flex">
   <SkillCarousel skills={skills} client:load />
   <div class="flex-1 p-20">
-    <SkillDescription skill={skills[5].fullBodyDescription} />
+    <SkillDescription
+      skills={skills.map((obj) => obj.fullBodyDescription)}
+      client:load
+    />
   </div>
 </div>

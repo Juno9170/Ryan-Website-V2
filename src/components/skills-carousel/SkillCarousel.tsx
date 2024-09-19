@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { type CarouselApi } from "@/components/ui/carousel";
 import { ArrowUpDown } from "lucide-react";
 import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
+import { activeSkill } from "@/funcs/atoms";
+import { useStore } from "@nanostores/react";
 import {
   Carousel,
   CarouselContent,
@@ -14,20 +16,20 @@ interface PropsSchema {
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
-  fullBodyDescription:{
+  fullBodyDescription: {
     value: TypesafeStructuredTextGraphQlResponse;
-  }
+  };
   icon: {
     avifUrl?: string;
     webpUrl?: string;
     fallbackUrl: string;
   };
 }
-
 const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState<number>(0);
   const [dragging, setDragging] = useState<boolean>(false);
+  const $activeSkill = useStore(activeSkill);
 
   useEffect(() => {
     if (!api) {
@@ -105,8 +107,14 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
                       />
                     </picture>
                   </div>
-                  <div className=" xl: rotate-90 pt-20">
-                    <ArrowUpDown strokeWidth={1.25}/>
+                  <div
+                    className=" xl: rotate-90 pt-20"
+                    onClick={() => {
+                      api?.scrollTo(index);
+                      activeSkill.set(index);
+                    }}
+                  >
+                    <ArrowUpDown strokeWidth={1.25} />
                   </div>
                 </div>
               </CarouselItem>
