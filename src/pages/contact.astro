@@ -1,7 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ContactForm from "@/components/contact-me/ContactForm";
 ---
 
 <Layout title="Lets work together!">
-  <div class="h-[500vh]">Contact</div>
+  <div class="h-[500vh] pt-40">
+    
+    <ContactForm client:load/>
+  </div>
+  
 </Layout>
