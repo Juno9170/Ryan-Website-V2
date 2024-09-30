@@ -17,8 +17,11 @@ import {
 import { Input } from "@/components/ui/input"
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  fullName: z.string().min(2, {
+    message: "name must be at least 2 characters.",
+  }),
+  emailAddress: z.string().email({
+    message: "email not valid. Please enter a valid email.",
   }),
 })
 
@@ -26,7 +29,8 @@ const ContactForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      fullName: "",
+      emailAddress: "",
     },
   })
 
@@ -36,24 +40,42 @@ const ContactForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/3 space-y-6">
         <FormField
           control={form.control}
-          name="username"
+          name="fullName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Your Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="who's calling?" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                This is who I will address you as.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="emailAddress"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Your Email</FormLabel>
+              <FormControl>
+                <Input placeholder="example987@gmail.com?" {...field} />
+              </FormControl>
+              <FormDescription>
+                Please enter your full email address.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex justify-center">
         <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   )
