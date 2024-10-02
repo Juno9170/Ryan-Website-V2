@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "../ui/textarea"
 
 const FormSchema = z.object({
   fullName: z.string().min(2, {
@@ -22,6 +23,9 @@ const FormSchema = z.object({
   }),
   emailAddress: z.string().email({
     message: "email not valid. Please enter a valid email.",
+  }),
+  message: z.string().max(300, {
+    message: "message is too long! (300 character max).",
   }),
 })
 
@@ -31,6 +35,7 @@ const ContactForm = () => {
     defaultValues: {
       fullName: "",
       emailAddress: "",
+      message: "",
     },
   })
 
@@ -68,6 +73,25 @@ const ContactForm = () => {
               </FormControl>
               <FormDescription>
                 Please enter your full email address.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="message"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Message to me!</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Tell us a little bit about yourself"
+                  className="resize-none"
+                  {...field} />
+              </FormControl>
+              <FormDescription>
+                Please enter your message here.
               </FormDescription>
               <FormMessage />
             </FormItem>
