@@ -55,7 +55,8 @@ export default {
   			}
   		},
   		boxShadow: {
-  			'dark-short': '0 3px 10px rgba(0, 0, 0, 0.3)'
+  			'dark-short': '0 3px 10px rgba(0, 0, 0, 0.3)',
+			'button-short': '0 3px 6px rgba(0, 0, 0, 0.3)',
   		},
   		screens: {
   			xxl: '1920px',

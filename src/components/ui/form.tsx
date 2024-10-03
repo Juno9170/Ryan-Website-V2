@@ -87,7 +87,7 @@ const FormLabel = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
 >(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField()
-
+  className = "text-[#585a4f]"
   return (
     <Label
       ref={ref}

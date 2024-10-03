@@ -45,7 +45,7 @@ const ContactForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/3 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/2 space-y-6 shadow-dark-short border-2 border-[#f3fefb] bg-[#dee7e4] rounded-[2.5rem] px-14 py-10">
         <FormField
           control={form.control}
           name="fullName"
@@ -97,8 +97,8 @@ const ContactForm = () => {
             </FormItem>
           )}
         />
-        <div className="flex justify-center">
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-center pt-2">
+        <Button type="submit" className="h-full px-8 shadow-button-short rounded-full bg-[#8DB9AA] hover:bg-[#587d71]">Submit</Button>
         </div>
       </form>
     </Form>
