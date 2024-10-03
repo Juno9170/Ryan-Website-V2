@@ -36,7 +36,6 @@ const TimeLineProject: React.FC<Props> = ({ project, index, hoverable }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        console.log("Entry:", entry); // Log the entry to debug
         setIsInViewport(entry.isIntersecting);
       },
       {

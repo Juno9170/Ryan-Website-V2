@@ -10,7 +10,7 @@ interface PropsSchema {
 const SkillDescription: React.FC<PropsSchema> = ({ skills }) => {
   const $activeSkill = useStore(activeSkill);
   return (
-    <div className=" xxl:prose-2xl xl:prose-xl lg:prose-lg md:prose-base prose-sm">
+    <div className="max-h-[90vh] prose-hr:my-10 xl:prose-xl lg:prose-lg md:prose-base prose-sm bg-transparent">
       <StructuredTextRenderer data={skills[$activeSkill]} />
     </div>
   );

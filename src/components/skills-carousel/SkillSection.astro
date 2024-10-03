@@ -1,7 +1,10 @@
 ---
+import type { OnlyResponseCanBeReturned } from "node_modules/astro/dist/core/errors/errors-data";
 import SkillCarousel from "./SkillCarousel";
 import SkillDescription from "./SkillDescription";
 import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
+import BackgroundGrid from "../base-components/BackgroundGrid.astro";
+import BackgroundCircle from "../base-components/BackgroundCircle.astro";
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
@@ -36,14 +39,20 @@ const fetchData = async (): Promise<SkillSchema[]> => {
           allSkills {
             fullBodyDescription {
               value
+              blocks {
+                id
+                image {
+                  url
+                }
+              }
             }
             name
             relatedSkills
             icon {
               alt
-              avifUrl: url(imgixParams: {w: 300, fm:avif, q:40})
-              webpUrl: url(imgixParams: {w: 300, fm:webp, q:40})
-              fallbackUrl: url(imgixParams: {w: 300, fm:jpg, q:70})
+              avifUrl: url(imgixParams: {w: 300, fm: avif, q: 70})
+              webpUrl: url(imgixParams: {w: 300, fm: webp, q: 70})
+              fallbackUrl: url(imgixParams: {w: 300, fm: jpg, q: 100})
             }
           }
         }
@@ -66,12 +75,18 @@ const fetchData = async (): Promise<SkillSchema[]> => {
 const skills = await fetchData();
 ---
 
-<div class="flex">
+<div class="flex relative overflow-x-clip">
   <SkillCarousel skills={skills} client:load />
   <div class="flex-1 p-20">
     <SkillDescription
       skills={skills.map((obj) => obj.fullBodyDescription)}
       client:load
     />
+  </div>
+  <div class="absolute left-[15%] -top-1/4 -z-10 opacity-50">
+    <BackgroundCircle size={900} startX={100} startY={250} gridOpacity={0.2} />
+  </div>
+  <div class="absolute -right-[15%] -bottom-1/4 -z-10 opacity-50">
+    <BackgroundCircle size={900} startX={100} startY={250} gridOpacity={0.2} />
   </div>
 </div>

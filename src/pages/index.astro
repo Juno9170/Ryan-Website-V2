@@ -82,7 +82,7 @@ const projects = await fetchData();
   <div class="">
     <BioHeader />
     <TimeLineSection projects={projects} client:only="react" />
-    <div class="pt-[25vh]">
+    <div class="pt-[25vh] overflow-clip">
       <SkillSection />
     </div>
   </div>

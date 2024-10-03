@@ -80,7 +80,9 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
           setApi={setApi}
           opts={{
             align: "center",
-            loop: true,
+            loop: false,
+            skipSnaps: true,
+            dragThreshold: 200,
           }}
           orientation="vertical"
           className="w-96 bg-white"
