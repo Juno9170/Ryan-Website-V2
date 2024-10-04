@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ContactForm from "@/components/contact-me/ContactForm";
+import ContactFormIsland from "@/components/contact-me/ContactFormIsland";
 import BackgroundCircle from "@/components/base-components/BackgroundCircle.astro";
 ---
 
@@ -11,8 +11,7 @@ import BackgroundCircle from "@/components/base-components/BackgroundCircle.astr
         <BackgroundCircle size={800} gridSize={80} startX={100} startY={200}/>
       </div>
     </div>
-      <ContactForm client:load/>
-   
+      <ContactFormIsland client:load/>
   </div>
   
 </Layout>

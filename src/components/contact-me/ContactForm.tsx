@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
+import { useGoogleReCaptcha, GoogleReCaptchaProvider } from "react-google-recaptcha-v3"; // Import useGoogleReCaptcha
 
 const FormSchema = z.object({
   fullName: z.string().min(2, {
@@ -30,6 +31,7 @@ const FormSchema = z.object({
 });
 
 const ContactForm = () => {
+  const { executeRecaptcha } = useGoogleReCaptcha(); // Initialize reCAPTCHA
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -42,12 +44,45 @@ const ContactForm = () => {
   const { handleSubmit, control, formState } = form;
   const { errors, isSubmitting } = formState;
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-  }
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    if (!executeRecaptcha) {
+      console.error("Recaptcha not yet loaded");
+      return;
+    }
+  
+    try {
+      const token = await executeRecaptcha("submit"); // Get the reCAPTCHA token
+      
+      const functionURL = '/.netlify/functions/V3ReCaptcha';
+  
+      const response = await fetch(functionURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...data, token }), // Send the form data and token as JSON
+      });
+  
+      // Check if the response is successful
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Error: ${response.status} ${errorMessage}`);
+      }
+  
+      const result = await response.json(); // Parse the JSON from the response
+      console.log("Server response:", result); // Handle the server response
+      console.log("score: " , result.score); // Log the score to debug
+  
+      // Optionally, you can return or process the result further here
+    } catch (error) {
+      console.error("Error submitting data to function:", error); // Handle any errors
+      // Optionally, display an error message to the user here
+    }
+  };
+  
 
   return (
-    <div className=" w-full lg:w-1/2 space-y-6 bg-gradient-to-tr from-transparent to-transparent via-white">
+    <div className="w-full lg:w-1/2 space-y-6 bg-gradient-to-tr from-transparent to-transparent via-white">
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -141,4 +176,5 @@ const ContactForm = () => {
     </div>
   );
 };
+
 export default ContactForm;

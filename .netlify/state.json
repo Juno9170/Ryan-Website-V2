@@ -1,3 +1,21 @@
 {
-	"siteId": "b7e46fce-6bed-4ef4-b00a-8ea052b198d6"
+	"siteId": "b7e46fce-6bed-4ef4-b00a-8ea052b198d6",
+	"geolocation": {
+		"data": {
+			"city": "Ottawa",
+			"country": {
+				"code": "CA",
+				"name": "Canada"
+			},
+			"subdivision": {
+				"code": "ON",
+				"name": "Ontario"
+			},
+			"timezone": "America/Toronto",
+			"latitude": 45.3351,
+			"longitude": -75.626,
+			"postalCode": "K1T"
+		},
+		"timestamp": 1728078825420
+	}
 }
