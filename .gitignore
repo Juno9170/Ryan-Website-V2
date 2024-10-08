@@ -26,5 +26,4 @@ pnpm-debug.log*
 # Local Netlify folder
 .netlify
 
-
 *storybook.log
