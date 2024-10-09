@@ -1,7 +1,4 @@
 import { google } from 'googleapis';
-import { schedule } from '@netlify/functions';
-
-// Retrieve environment variables
 const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
 const SHEET_NAME = 'Form Submissions';
 const CLIENT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
