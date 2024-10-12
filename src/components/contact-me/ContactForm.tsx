@@ -123,8 +123,14 @@ const ContactForm = () => {
     }
   };
 
-  const onSuccess = (data: z.infer<typeof FormSchema>) => {
-    console.log("Form submitted successfully with data:", data);
+  const onSuccess = async (data: z.infer<typeof FormSchema>) => {
+    const response = await fetch('/.netlify/functions/googleSheetsHandler', { // Adjust the URL based on your hosting
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
   };
 
   return (
