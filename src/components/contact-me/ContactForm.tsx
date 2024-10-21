@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useToast } from "@/hooks/use-toast"
 import {
   Form,
   FormControl,
@@ -32,6 +33,7 @@ const FormSchema = z.object({
 });
 
 const ContactForm = () => {
+  const { toast } = useToast();
   const { executeRecaptcha } = useGoogleReCaptcha(); // Initialize reCAPTCHA
   const recaptchaRef = useRef(null); // Reference to the reCAPTCHA component
   const [showChallenge, setShowChallenge] = useState(false); // State to track whether reCAPTCHA is verified
@@ -131,6 +133,34 @@ const ContactForm = () => {
       },
       body: JSON.stringify(data),
     });
+    if (response.ok){
+      const date: Date = new Date();
+
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      };
+
+      const formattedDate: string = date.toLocaleString('en-US', options);
+
+      toast({
+        className:"border-[#d6e4dc] border-2",
+        title: "Form Submission: Success!",
+        description: formattedDate ? formattedDate : "Today",
+      });
+    }
+    else{
+      toast({
+        variant: "destructive",
+        title: "Form Submission: Failed!",
+        description: "Please try again later or check your email domain",
+      });
+    }
   };
 
   return (
