@@ -77,16 +77,11 @@ const skills = await fetchData();
 
 <div class="flex relative overflow-x-clip">
   <SkillCarousel skills={skills} client:load />
-  <div class="flex-1 p-20">
+  <div class="flex-1 px-20">
     <SkillDescription
       skills={skills.map((obj) => obj.fullBodyDescription)}
       client:load
     />
   </div>
-  <div class="absolute left-[15%] -top-1/4 -z-10 opacity-50">
-    <BackgroundCircle size={900} startX={100} startY={250} gridOpacity={0.2} />
-  </div>
-  <div class="absolute -right-[15%] -bottom-1/4 -z-10 opacity-50">
-    <BackgroundCircle size={900} startX={100} startY={250} gridOpacity={0.2} />
-  </div>
+  
 </div>

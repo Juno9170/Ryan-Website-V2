@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { type CarouselApi } from "@/components/ui/carousel";
-import { ArrowUpDown } from "lucide-react";
 import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
 import { activeSkill } from "@/funcs/atoms";
 import { useStore } from "@nanostores/react";
@@ -9,7 +8,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Minus } from "lucide-react";
 interface PropsSchema {
   skills: Array<SkillSchema>;
 }
@@ -46,15 +45,19 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
     });
     api.on("pointerUp", () => {
       setDragging(false);
+      activeSkill.set(api.selectedScrollSnap());
+    });
+    api.on("slidesChanged", () => {
+      
     });
   }, [api]);
 
   return (
-    <div className="flex">
+    <div className="flex max-h-screen">
       <div className="flex flex-col justify-center pr-5 ">
         <div className="flex-1 flex flex-col justify-center">
           <ChevronUp
-            onClick={() => api?.scrollPrev()}
+            onClick={() => {api?.scrollPrev();activeSkill.set(api?.selectedScrollSnap() || 0);}}
             width={30}
             height={30}
             className=" hover:stroke-[#8DB9AA] transition-colors duration-150 ease-in-out stroke-[#86887B]"
@@ -62,7 +65,7 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
         </div>
         <div className="flex-1 flex flex-col justify-center">
           <ChevronDown
-            onClick={() => api?.scrollNext()}
+            onClick={() => {api?.scrollNext();activeSkill.set(api?.selectedScrollSnap() || 0);}}
             width={30}
             height={30}
             className="hover:stroke-[#8DB9AA] transition-colors duration-150 ease-in-out stroke-[#86887B]"
@@ -80,7 +83,7 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
           setApi={setApi}
           opts={{
             align: "center",
-            loop: false,
+            loop: true,
             skipSnaps: true,
             dragThreshold: 200,
           }}
@@ -115,8 +118,15 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
                       api?.scrollTo(index);
                       activeSkill.set(index);
                     }}
-                  >
-                    <ArrowUpDown strokeWidth={1.25} />
+                  > 
+                    <div className="overflow-clip">
+                      <div className=" translate-y-2 hover:translate-y-0 transition-transform duration-300 group" style={{transitionTimingFunction: "var(--ease-spring-3)"}}>
+                      <ChevronUp strokeWidth={2}/>
+                      <div className="rounded-full px-[3px]">
+                      <div className="w-full h-[2px] bg-[#0f0f0f] opacity-0 -translate-y-1 group-hover:opacity-100 delay-100 transition-all duration-300"/> 
+                      </div>
+                      </div> 
+                    </div>
                   </div>
                 </div>
               </CarouselItem>
