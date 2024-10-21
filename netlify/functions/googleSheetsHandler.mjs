@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
+import { resolveMx, resolve } from 'dns/promises';
 const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
-const SHEET_NAME = 'Form Submissions';
+const SHEET_NAME = 'Sheet1';
 const CLIENT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'); // Handle escaped newlines
 
@@ -13,14 +14,64 @@ export const handler = async (event, context) => {
   }
 
   const body = JSON.parse(event.body);
-  const { name, email, message } = body;
+  const { fullName, emailAddress, message } = body;
 
-  if (!name || !email || !message) {
+  if (!fullName || !emailAddress || !message) {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: 'Missing required fields' }),
     };
   }
+  const domain = emailAddress.split('@')[1];
+  
+  try {
+    // Step 1: Check for MX records
+    const mxRecords = await resolveMx(domain);
+    if (mxRecords.length <= 0) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Invalid Email Domain: No MX Records' }),
+      };
+    }
+
+    // Step 2: Check for A (IPv4) or AAAA (IPv6) records
+    let ipv4Addresses = [];
+    let ipv6Addresses = [];
+
+    try {
+      ipv4Addresses = await resolve(domain, 'A');
+      } catch (err) {
+        console.warn(`No A (IPv4) records found for ${domain}`);
+      }
+
+      try {
+        ipv6Addresses = await resolve(domain, 'AAAA');
+      } catch (err) {
+        console.warn(`No AAAA (IPv6) records found for ${domain}`);
+      }
+
+      // If no A or AAAA records found, return an error
+      if (ipv4Addresses.length === 0 && ipv6Addresses.length === 0) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: 'Invalid Email Domain: No A or AAAA Records' }),
+        };
+      }
+
+    } catch (err) {
+      // Step 3: Handle specific DNS-related errors
+      if (err.code === 'ENOTFOUND' || err.code === 'ENODATA') {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: `Invalid Email Domain: ${domain} not found` }),
+        };
+      }
+      console.error(`Error validating domain ${domain}:`, err);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Internal Server Error' }),
+      };
+    }
 
   try {
     // Set up the JWT client with the service account credentials from environment variables
@@ -37,11 +88,11 @@ export const handler = async (event, context) => {
     // Append the form data to the Google Sheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A1`, // Adjust based on your sheet structure
+      range: `${SHEET_NAME}!A2`, // Adjust based on your sheet structure
       valueInputOption: 'USER_ENTERED',
       insertDataOption: 'INSERT_ROWS',
       resource: {
-        values: [[name, email, message]], // Data to append
+        values: [[fullName, emailAddress, message]], // Data to append
       },
     });
 
