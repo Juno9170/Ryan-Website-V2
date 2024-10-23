@@ -180,7 +180,7 @@ const ContactForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="who's calling?"
+                    placeholder="eg: John Pork"
                     {...field}
                     className="xxl:text-xl xl:text-lg text-base"
                   />
@@ -204,7 +204,7 @@ const ContactForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="example987@gmail.com?"
+                    placeholder="example987@gmail.com"
                     {...field}
                     className="xxl:text-xl xl:text-lg text-base "
                   />
