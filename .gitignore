@@ -28,3 +28,4 @@ pnpm-debug.log*
 
 
 *storybook.log
+.netlify/state.json
