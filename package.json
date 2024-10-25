@@ -19,6 +19,7 @@
     "@netlify/functions": "^2.8.2",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.2",
     "@types/google-apps-script": "^1.0.83",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",

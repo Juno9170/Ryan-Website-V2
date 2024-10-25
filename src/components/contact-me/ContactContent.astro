@@ -1,0 +1,48 @@
+---
+interface Props {
+  data: {
+    email: string;
+    github: string;
+    linkedin: string;
+    title: string;
+    subtitle: string;
+  };
+}
+
+const { data } = Astro.props;
+import { Mail, Linkedin, Github } from "lucide-react";
+---
+
+<div class="w-full pb-20 pr-0 lg:pb-0 lg:w-1/2 lg:pr-20">
+  <div
+    class="text-3xl md:text-5xl xxl:text-6xl xxxl:text-8xl text-[#3e423b]"
+    style={{ textShadow: "0px 5px 10px #00000040" }}
+  >
+    {data.title}
+  </div>
+  <div class="text-[#86887B] pt-10 text-base xl:text-lg">
+    {data.subtitle}
+  </div>
+  <div
+    class="text-[#86887B] pt20 flex flex-col gap-5 pt-20 text-base xl:text-lg xxl:text-xl"
+  >
+    <div class="flex gap-2">
+      <Mail size={"6.5%"} />
+      <div class="pl-2 flex items-center">
+        {data.email}
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <Github size={"6.5%"} />
+      <div class="pl-2 flex items-center">
+        {data.github}
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <Linkedin size={"6.5%"} />
+      <div class="pl-2 flex items-center">
+        {data.linkedin}
+      </div>
+    </div>
+  </div>
+</div>

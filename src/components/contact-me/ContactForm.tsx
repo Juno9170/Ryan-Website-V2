@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useToast } from "@/hooks/use-toast";
 import {
   Form,
   FormControl,
@@ -32,10 +33,13 @@ const FormSchema = z.object({
 });
 
 const ContactForm = () => {
+  const { toast } = useToast();
   const { executeRecaptcha } = useGoogleReCaptcha(); // Initialize reCAPTCHA
   const recaptchaRef = useRef(null); // Reference to the reCAPTCHA component
   const [showChallenge, setShowChallenge] = useState(false); // State to track whether reCAPTCHA is verified
-  const [formData, setFormData] = useState<z.infer<typeof FormSchema> | null>(null); // State to store form data when v2 is triggered
+  const [formData, setFormData] = useState<z.infer<typeof FormSchema> | null>(
+    null,
+  ); // State to store form data when v2 is triggered
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -54,27 +58,27 @@ const ContactForm = () => {
       console.error("Recaptcha not yet loaded");
       return;
     }
-  
+
     try {
       const token = await executeRecaptcha("submit"); // Get the reCAPTCHA token
-      
-      const functionURL = '/.netlify/functions/recaptchaVerifier';
-  
+
+      const functionURL = "/.netlify/functions/recaptchaVerifier";
+
       const response = await fetch(functionURL, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ token, version: "v3" }), // Send the form data and token as JSON
       });
-  
+
       // Check if the response is successful
       if (!response.ok) {
         const errorMessage = await response.text();
         throw new Error(`Error: ${response.status} ${errorMessage}`);
       }
-  
-      const result = await response.json(); 
+
+      const result = await response.json();
 
       if (result.score <= 0.5) {
         setShowChallenge(true);
@@ -83,7 +87,6 @@ const ContactForm = () => {
         onSuccess(data);
         reset();
       }
-      
     } catch (error) {
       console.error("Error submitting data to function:", error);
     }
@@ -92,11 +95,11 @@ const ContactForm = () => {
   const onRecaptchaChange = async (v2Token: string | null) => {
     if (v2Token && formData) {
       try {
-        const functionURL = '/.netlify/functions/recaptchaVerifier';
+        const functionURL = "/.netlify/functions/recaptchaVerifier";
         const response = await fetch(functionURL, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ token: v2Token, version: "v2" }), // Send the v2 token to server
         });
@@ -107,7 +110,7 @@ const ContactForm = () => {
         }
 
         const result = await response.json();
-        
+
         if (result.success) {
           // Handle success by passing the form data to onSuccess
           onSuccess(formData);
@@ -124,21 +127,49 @@ const ContactForm = () => {
   };
 
   const onSuccess = async (data: z.infer<typeof FormSchema>) => {
-    const response = await fetch('/.netlify/functions/googleSheetsHandler', { // Adjust the URL based on your hosting
-      method: 'POST',
+    const response = await fetch("/.netlify/functions/googleSheetsHandler", {
+      // Adjust the URL based on your hosting
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
+    if (response.ok) {
+      const date: Date = new Date();
+
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      };
+
+      const formattedDate: string = date.toLocaleString("en-US", options);
+
+      toast({
+        className: "border-[#d6e4dc] border-2",
+        title: "Form Submission: Success!",
+        description: formattedDate ? formattedDate : "Today",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Form Submission: Failed!",
+        description: "Please try again later or check your email domain",
+      });
+    }
   };
 
   return (
-    <div className="w-full lg:w-1/2 space-y-6 bg-gradient-to-tr from-transparent to-transparent via-white">
+    <div className="w-full lg:w-1/2 space-y-3 md:space-y-6 bg-gradient-to-tr from-transparent to-transparent via-white">
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full space-y-6 shadow-dark-short border-2 border-[#f3fefb] bg-[#a1c2af70] rounded-[2.5rem] px-14 py-10"
+          className="w-full space-y-3 md:space-y-6 shadow-dark-short border-2 border-[#f3fefb] bg-[#a1c2af70] rounded-[2.5rem] px-7 py-5 md:px-10 md:py-8 lg:px-14 lg:py-10"
         >
           <FormField
             control={control}
@@ -150,7 +181,7 @@ const ContactForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="who's calling?"
+                    placeholder="eg: John Pork"
                     {...field}
                     className="xxl:text-xl xl:text-lg text-base"
                   />
@@ -174,7 +205,7 @@ const ContactForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="example987@gmail.com?"
+                    placeholder="example987@gmail.com"
                     {...field}
                     className="xxl:text-xl xl:text-lg text-base "
                   />
@@ -221,7 +252,7 @@ const ContactForm = () => {
               onChange={onRecaptchaChange} // Handle reCAPTCHA state when the checkbox is checked/unchecked
             />
           )}
-          
+
           <div className="flex justify-center py-2">
             <Button
               type="submit"
