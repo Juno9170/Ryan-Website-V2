@@ -8,9 +8,8 @@ import BackgroundCircle from "../base-components/BackgroundCircle.astro";
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
-  fullBodyDescription: {
-    value: TypesafeStructuredTextGraphQlResponse;
-  };
+  fullBodyDescription: 
+    TypesafeStructuredTextGraphQlResponse,
   icon: {
     avifUrl?: string;
     webpUrl?: string;
@@ -40,9 +39,19 @@ const fetchData = async (): Promise<SkillSchema[]> => {
             fullBodyDescription {
               value
               blocks {
-                id
-                image {
-                  url
+                ... on IconImageRecord {
+                  id
+                  __typename
+                  image {
+                    url
+                  }
+                }
+                ... on SkillBlockRecord {
+                  id
+                  __typename
+                  title
+                  projectLink
+                  shortDescription
                 }
               }
             }
@@ -73,6 +82,7 @@ const fetchData = async (): Promise<SkillSchema[]> => {
 };
 
 const skills = await fetchData();
+console.log(skills);
 ---
 
 <div class="flex relative overflow-x-clip">

@@ -4,35 +4,67 @@ import type {
   StructuredTextGraphQlResponseRecord,
 } from "react-datocms";
 import { StructuredText } from "react-datocms";
+import SkillProjectBlock from "../skills-carousel/SkillProjectBlock";
 
 interface PropsSchema {
-  data: {
-    value: TypesafeStructuredTextGraphQlResponse;
-  };
+  data: TypesafeStructuredTextGraphQlResponse;
 }
 
-interface ImageRecord extends StructuredTextGraphQlResponseRecord {
+interface IconImageRecord extends StructuredTextGraphQlResponseRecord {
+  __typename: "IconImageRecord";
   image: {
     url: string;
   };
 }
 
-const StructuredTextRenderer: React.FC<PropsSchema> = (props) => {
+interface SkillBlockRecord extends StructuredTextGraphQlResponseRecord {
+  __typename: "SkillBlockRecord";
+  title: string;
+  shortDescription: string;
+  projectLink?: string;
+}
+
+type BlockSchema = IconImageRecord | SkillBlockRecord;
+
+const StructuredTextRenderer: React.FC<PropsSchema> = ({ data }) => {
   return (
     <StructuredText
-      data={props.data}
+      data={data}
       renderBlock={({ record }) => {
-        const imageRecord = record as ImageRecord;
-        return (
-          <img
-            src={imageRecord.image.url}
-            alt={`skill icon mini`}
-            className="w-10"
-          />
-        );
+        // Narrow down the type of `record`
+        if (isIconImageRecord(record)) {
+          return (
+            <img
+              src={record.image.url}
+              alt="skill icon mini"
+              className="w-10"
+            />
+          );
+        } else if (isSkillBlockRecord(record)) {
+          return (
+            <div className="inline-block mr-10 w-1/3 h-36 prose-h4:my-2">
+              <SkillProjectBlock
+                title={record.title}
+                description={record.shortDescription}
+                link={record.projectLink || ""}
+              />
+            </div>
+          );
+        }
+        return null; // Default case if no match
       }}
     />
   );
+};
+
+// Type guard for IconImageRecord
+const isIconImageRecord = (record: StructuredTextGraphQlResponseRecord): record is IconImageRecord => {
+  return record.__typename === "IconImageRecord";
+};
+
+// Type guard for SkillBlockRecord
+const isSkillBlockRecord = (record: StructuredTextGraphQlResponseRecord): record is SkillBlockRecord => {
+  return record.__typename === "SkillBlockRecord";
 };
 
 export default StructuredTextRenderer;

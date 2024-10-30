@@ -5,7 +5,7 @@ import { activeSkill } from "@/funcs/atoms";
 import { useStore } from "@nanostores/react";
 
 interface PropsSchema {
-  skills: Array<{ value: TypesafeStructuredTextGraphQlResponse }>;
+  skills: Array<TypesafeStructuredTextGraphQlResponse>;
 }
 const SkillDescription: React.FC<PropsSchema> = ({ skills }) => {
   const $activeSkill = useStore(activeSkill);

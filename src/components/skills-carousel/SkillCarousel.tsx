@@ -15,9 +15,8 @@ interface PropsSchema {
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
-  fullBodyDescription: {
-    value: TypesafeStructuredTextGraphQlResponse;
-  };
+  fullBodyDescription: 
+    TypesafeStructuredTextGraphQlResponse,
   icon: {
     avifUrl?: string;
     webpUrl?: string;
