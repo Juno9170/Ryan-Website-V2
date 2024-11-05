@@ -10,7 +10,7 @@ interface SkillProjectBlockProps {
 
 const SkillProjectBlock : React.FC<SkillProjectBlockProps> = ({title, description, link = ""}) => {
     return (
-        <Card>
+        <Card className='h-40'>
           <CardContent className="p-4">
             <h4 className="font-semibold">{title}</h4>
             <p className="text-sm text-muted-foreground mt-1">{description}</p>

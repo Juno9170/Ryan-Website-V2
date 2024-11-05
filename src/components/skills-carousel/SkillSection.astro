@@ -1,10 +1,11 @@
 ---
-import type { OnlyResponseCanBeReturned } from "node_modules/astro/dist/core/errors/errors-data";
 import SkillCarousel from "./SkillCarousel";
 import SkillDescription from "./SkillDescription";
 import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
+import SkillCarouselMobile from "./SkillCarouselMobile"; 
 import BackgroundGrid from "../base-components/BackgroundGrid.astro";
 import BackgroundCircle from "../base-components/BackgroundCircle.astro";
+
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
@@ -85,13 +86,37 @@ const skills = await fetchData();
 console.log(skills);
 ---
 
-<div class="flex relative overflow-x-clip">
-  <SkillCarousel skills={skills} client:load />
-  <div class="flex-1 px-20">
-    <SkillDescription
-      skills={skills.map((obj) => obj.fullBodyDescription)}
-      client:load
-    />
+<style>
+  /* Add styles to hide the carousel on mobile */
+  .hide-on-mobile {
+    display: block;
+  }
+  .show-on-mobile {
+    display: none;
+  }
+  @media (max-width: 1024px) {
+    .hide-on-mobile {
+      display: none;
+    }
+    .show-on-mobile {
+      display: block;
+    }
+  }
+</style>
+
+<div class="flex relative overflow-x-clip max-h-screen overflow-y-clip">
+  <div class="hide-on-mobile">
+    <SkillCarousel skills={skills} client:load />
   </div>
   
+  <div class="flex-1">
+    <SkillDescription
+      skills={skills.map((obj) => obj.fullBodyDescription)}
+      related={skills.map((obj) => obj.relatedSkills)}
+      client:load
+    />
+    <div class="show-on-mobile">
+      <SkillCarouselMobile skills={skills} client:load />
+    </div>
+  </div>
 </div>

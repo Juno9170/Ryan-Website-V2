@@ -83,7 +83,7 @@ const TimeLineProject: React.FC<Props> = ({ project, index, hoverable }) => {
               <br />
               <p className=" text-xs font-AndersonLight">{project.date}</p>
             </h2>
-            <div className="overflow-hidden transition-all duration-500 ease-in-out max-h-0 group-hover:max-h-full">
+            <div className="overflow-clip transition-all duration-500 ease-in-out max-h-0 group-hover:max-h-full">
               <p className="">{project.shortDescription}</p>
               <div className="flex justify-between pt-5">
                 <Button

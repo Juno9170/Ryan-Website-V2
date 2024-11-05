@@ -42,7 +42,7 @@ const StructuredTextRenderer: React.FC<PropsSchema> = ({ data }) => {
           );
         } else if (isSkillBlockRecord(record)) {
           return (
-            <div className="inline-block mr-10 w-1/3 h-36 prose-h4:my-2">
+            <div className=" inline-flex mr-10 w-1/3 prose-h4:my-2">
               <SkillProjectBlock
                 title={record.title}
                 description={record.shortDescription}
@@ -51,7 +51,7 @@ const StructuredTextRenderer: React.FC<PropsSchema> = ({ data }) => {
             </div>
           );
         }
-        return null; // Default case if no match
+        return null;
       }}
     />
   );
