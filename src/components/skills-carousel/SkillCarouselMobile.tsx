@@ -56,7 +56,7 @@ const SkillCarouselMobile: React.FC<PropsSchema> = ({ skills }) => {
     <div className="flex">
       
       <div
-        className="flex justify-center px-1 "
+        className="flex justify-center pt-1"
         style={{
           background:
             "linear-gradient(to right, transparent, #8DB9AA, transparent)",
@@ -71,14 +71,15 @@ const SkillCarouselMobile: React.FC<PropsSchema> = ({ skills }) => {
             dragThreshold: 200,
           }}
           orientation="horizontal"
-          className="w-full bg-white"
+          className="w-full bg-white py-6"
         >
           <CarouselContent
-            className="-mt-1 h-[80vh]
+            className="-mt-1
+        
         "
           >
             {skills.map((skill, index) => (
-              <CarouselItem key={index} className="basis-1/3 pt-0 ">
+              <CarouselItem key={index} className="basis-1/3 pt-0 h-fit lg:h-auto ">
                 <div
                   className={`w-full flex items-center transition-all duration-100 ${dragging ? "border-l" : ""} ${index === (current + 2) % skills.length && !dragging ? "border-l" : ""} ${index === (current - 2 < 0 ? current - 2 + skills.length : current - 2) && !dragging ? "border-r" : ""} ${!dragging && index === current ? " border-x" : ""} `}
                 >
@@ -91,7 +92,7 @@ const SkillCarouselMobile: React.FC<PropsSchema> = ({ skills }) => {
                         alt={`${skill.name || ""} Skill Icon`}
                         loading="eager"
                         decoding="async"
-                        className=" h-20 xxl:h-28"
+                        className=" h-12 lg:h-20 xxl:h-28"
                       />
                     </picture>
                   </div>
