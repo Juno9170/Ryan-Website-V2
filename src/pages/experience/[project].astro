@@ -1,0 +1,132 @@
+---
+import type { GetStaticPaths } from "astro";
+
+interface SlugsSchema {
+  data: {
+    allProjects: Array<SlugSchema>;
+  };
+}
+
+interface SlugSchema {
+  slug: string;
+}
+
+
+
+interface ProjectSchema{
+    projectTitle: string;
+    slug: string;
+    startDate: string;
+    technologies: Array<string>;
+    projectLink: string;
+    longDescription: string;
+    primaryImage: ImageSchema;
+    gallery: Array<ImageSchema>;
+}
+interface ProjectsSchema{
+    data:{
+        allProjects: Array<ProjectSchema>;
+    }
+}
+interface ImageSchema{
+    alt: string;
+    avifUrl: string;
+    webpUrl: string;
+    jpgUrl: string;
+    fallbackUrl: string;
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    const response = await fetch("https://graphql.datocms.com/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${import.meta.env.DATOCMS_API_KEY}`,
+      },
+      body: JSON.stringify({
+        query: `
+          query MyQuery {
+              allProjects {
+                  slug
+              }
+          }
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const json: SlugsSchema = await response.json();
+    console.log(JSON.stringify(json))
+    return json.data.allProjects.map((project) => ({
+        params: { project: project.slug },
+    }));
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    return [];
+  }  
+};
+
+const { project } = Astro.params;
+
+const fetchData = async (): Promise<ProjectSchema | null> => {
+  try {
+    const response = await fetch("https://graphql.datocms.com/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${import.meta.env.DATOCMS_API_KEY}`,
+      },
+      body: JSON.stringify({
+        query: `
+          query MyQuery($slug: String!) {
+            allProjects(filter: {slug: {eq: $slug}}) {
+              projectTitle
+              slug
+              startDate
+              technologies
+              projectLink
+              longDescription
+              primaryImage {
+                alt
+                avifUrl: url(imgixParams: {q: 50, fm: avif, w: 800})
+                webpUrl: url(imgixParams: {q: 65, fm: webp, w: 800})
+                jpgUrl: url(imgixParams: {q: 80, fm: jpg, w: 800})
+                fallbackUrl: url
+              }
+              gallery {
+                alt
+                avifUrl: url(imgixParams: {q: 50, fm: avif, w: 800})
+                webpUrl: url(imgixParams: {q: 65, fm: webp, w: 800})
+                jpgUrl: url(imgixParams: {q: 80, fm: jpg, w: 800})
+                fallbackUrl: url
+              }
+            }
+          }
+        `,
+        variables: { slug: project },
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data: ProjectsSchema = await response.json();
+    return data.data.allProjects[0];
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    return null;
+  }
+};
+
+const data = await fetchData();
+---
+<div>{project}
+    {JSON.stringify(data)}
+</div>
