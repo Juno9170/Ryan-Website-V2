@@ -26,10 +26,17 @@ const {
   }}
   class="gridBackgroundDiv rounded-full"
 >
+  <div
+    style={{
+      "--size": `${size/2}px`,
+    }}
+    class="gridBackgroundBlocker rounded-full"
+  ></div>
 </div>
 
 <style>
   .gridBackgroundDiv {
+    -webkit-mask-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 70.7106781187%);
     width: var(--size);
     height: var(--size);
     border-style: solid;
@@ -48,12 +55,6 @@ const {
         transparent var(--gridSize),
         rgba(255, 255, 255, var(--gridOpacity)) var(--gridSize),
         rgba(255, 255, 255, var(--gridOpacity)) calc(var(--gridSize) + 2px)
-      ),
-      radial-gradient(
-        circle,
-        transparent,
-        rgba(255, 255, 255, 0.932) 60%,
-        white 70.7106781187%
       ),
       radial-gradient(
         circle at var(--startX) var(--startY),
