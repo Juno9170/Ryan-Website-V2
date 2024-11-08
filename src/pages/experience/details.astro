@@ -1,0 +1,19 @@
+---
+interface ImageSchema {
+    url: string;
+    alt: string;
+}
+
+interface ProjectSchema {
+    projectTitle: string;
+    slug: string;
+    startDate: string;
+    technologies: Array<string>;
+    projectLink: string;
+    longDescription: string;
+    primaryImage: ImageSchema;
+    gallery: Array<ImageSchema>;
+}
+
+
+---

@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-
+import Layout from "../../layouts/Layout.astro";
 interface SlugsSchema {
   data: {
     allProjects: Array<SlugSchema>;
@@ -94,9 +94,9 @@ const fetchData = async (): Promise<ProjectSchema | null> => {
               longDescription
               primaryImage {
                 alt
-                avifUrl: url(imgixParams: {q: 50, fm: avif, w: 800})
-                webpUrl: url(imgixParams: {q: 65, fm: webp, w: 800})
-                jpgUrl: url(imgixParams: {q: 80, fm: jpg, w: 800})
+                avifUrl: url(imgixParams: {q: 60, fm: avif, w: 1080})
+                webpUrl: url(imgixParams: {q: 75, fm: webp, w: 1080})
+                jpgUrl: url(imgixParams: {q: 75, fm: jpg, w: 1080})
                 fallbackUrl: url
               }
               gallery {
@@ -127,6 +127,8 @@ const fetchData = async (): Promise<ProjectSchema | null> => {
 
 const data = await fetchData();
 ---
-<div>{project}
-    {JSON.stringify(data)}
-</div>
+<Layout title={data?.projectTitle || "Project" } noBg={true}>
+  <div>{project}
+      {JSON.stringify(data)}
+  </div>
+</Layout>
