@@ -63,9 +63,11 @@ const {
     <title>{title} | {suffix}</title>
   </head>
   <body id="body" class="min-h-screen overflow-x-clip">
-    <div class="w-full font-Anderson">
+    <div class="w-full min-h-screen font-Anderson relative">
       <NavigationBar url={currentPath} client:load />
+      <div class="absolute top-0 left-0 right-0 bottom-0 -z-50 min-h-screen w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:30px_30px]"></div>
       <slot />
     </div>
   </body>
+  
 </html>
