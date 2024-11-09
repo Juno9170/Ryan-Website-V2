@@ -169,9 +169,19 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
         </>
       ) : null}
       <div className="w-full fixed h-14 py-2 mt-3 px-8 z-[100000]">
-        <div className="bg-[#EAEAEABF] backdrop-blur-md h-full w-full rounded-full flex justify-between px-4 py-1 shadow-dark-short">
-          <div className="bg-lightGreen flex tracking-[0.2rem] font-AndersonBolder h-full items-center px-8 justify-center rounded-full">
-            RZ
+        <div className="bg-[#EAEAEABF] backdrop-blur-md h-full w-full rounded-full flex justify-between px-4 py-1 shadow-dark-short ">
+          <div className="bg-lightGreen flex font-AndersonBold h-full items-center px-8 justify-center rounded-full gap-2 group">
+            <a href={"/"}>
+              <div className="flex">
+                <div className="max-w-0 group-hover:max-w-[14px] origin-right duration-150 ease-in-out pr-0 group-hover:pr-[3px]">{`< `}</div>
+                <div className="cursor-pointer my-0 mx-auto max-w-[22px] group-hover:max-w-12 transform overflow-clip text-nowrap transition-all duration-150 ease-out">
+                  <div className="roboto-semibold tracking-widest bg-lightGreen z-10">
+                    {`R`}
+                    <span className=" tracking-normal">{`Z/>`}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
           </div>
           {isMobile ? (
             <button
