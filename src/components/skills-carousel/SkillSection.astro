@@ -2,15 +2,15 @@
 import SkillCarousel from "./SkillCarousel";
 import SkillDescription from "./SkillDescription";
 import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
-import SkillCarouselMobile from "./SkillCarouselMobile"; 
+import SkillCarouselMobile from "./SkillCarouselMobile";
 import BackgroundGrid from "../base-components/BackgroundGrid.astro";
 import BackgroundCircle from "../base-components/BackgroundCircle.astro";
+import SkillPagination from "./SkillPagination";
 
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
-  fullBodyDescription: 
-    TypesafeStructuredTextGraphQlResponse,
+  fullBodyDescription: TypesafeStructuredTextGraphQlResponse;
   icon: {
     avifUrl?: string;
     webpUrl?: string;
@@ -83,7 +83,6 @@ const fetchData = async (): Promise<SkillSchema[]> => {
 };
 
 const skills = await fetchData();
-console.log(skills);
 ---
 
 <style>
@@ -104,17 +103,20 @@ console.log(skills);
   }
 </style>
 
-<div class="flex relative overflow-x-clip max-h-screen lg:max-h-none overflow-y-clip">
+<div
+  class="flex relative overflow-x-clip max-h-screen lg:max-h-none overflow-y-clip"
+>
   <div class="hide-on-mobile">
     <SkillCarousel skills={skills} client:load />
   </div>
-  
+
   <div class="flex-1">
     <SkillDescription
       skills={skills.map((obj) => obj.fullBodyDescription)}
       related={skills.map((obj) => obj.relatedSkills)}
       client:load
     />
+    <SkillPagination size={skills.length} client:load />
     <div class="show-on-mobile">
       <SkillCarouselMobile skills={skills} client:load />
     </div>

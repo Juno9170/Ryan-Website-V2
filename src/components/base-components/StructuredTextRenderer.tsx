@@ -42,7 +42,7 @@ const StructuredTextRenderer: React.FC<PropsSchema> = ({ data }) => {
           );
         } else if (isSkillBlockRecord(record)) {
           return (
-            <div className=" inline-flex my-4 lg:my-0 mr-10 min-w-full lg:w-1/3 lg:min-w-0 prose-h4:my-2">
+            <div className=" inline-flex my-2 lg:my-0 mr-10 min-w-full lg:w-1/3 lg:min-w-0 prose-h4:my-2">
               <SkillProjectBlock
                 title={record.title}
                 description={record.shortDescription}
@@ -58,12 +58,16 @@ const StructuredTextRenderer: React.FC<PropsSchema> = ({ data }) => {
 };
 
 // Type guard for IconImageRecord
-const isIconImageRecord = (record: StructuredTextGraphQlResponseRecord): record is IconImageRecord => {
+const isIconImageRecord = (
+  record: StructuredTextGraphQlResponseRecord,
+): record is IconImageRecord => {
   return record.__typename === "IconImageRecord";
 };
 
 // Type guard for SkillBlockRecord
-const isSkillBlockRecord = (record: StructuredTextGraphQlResponseRecord): record is SkillBlockRecord => {
+const isSkillBlockRecord = (
+  record: StructuredTextGraphQlResponseRecord,
+): record is SkillBlockRecord => {
   return record.__typename === "SkillBlockRecord";
 };
 

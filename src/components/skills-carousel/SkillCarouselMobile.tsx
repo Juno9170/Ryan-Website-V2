@@ -3,7 +3,7 @@ import { type CarouselApi } from "@/components/ui/carousel";
 import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
 import { activeSkill } from "@/funcs/atoms";
 import { useStore } from "@nanostores/react";
-import './skillCarousel.css';
+import "./skillCarousel.css";
 import {
   Carousel,
   CarouselContent,
@@ -16,8 +16,7 @@ interface PropsSchema {
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
-  fullBodyDescription: 
-    TypesafeStructuredTextGraphQlResponse,
+  fullBodyDescription: TypesafeStructuredTextGraphQlResponse;
   icon: {
     avifUrl?: string;
     webpUrl?: string;
@@ -47,14 +46,12 @@ const SkillCarouselMobile: React.FC<PropsSchema> = ({ skills }) => {
       setDragging(false);
       activeSkill.set(api.selectedScrollSnap());
     });
-    api.on("slidesChanged", () => {
-      
-    });
-  }, [api]);
+    api.on("slidesChanged", () => {});
+    api.scrollTo($activeSkill);
+  }, [api, $activeSkill]);
 
   return (
     <div className="flex">
-      
       <div
         className="flex justify-center pt-1"
         style={{
@@ -79,7 +76,10 @@ const SkillCarouselMobile: React.FC<PropsSchema> = ({ skills }) => {
         "
           >
             {skills.map((skill, index) => (
-              <CarouselItem key={index} className="basis-1/3 pt-0 h-fit lg:h-auto ">
+              <CarouselItem
+                key={index}
+                className="basis-1/3 pt-0 h-fit lg:h-auto "
+              >
                 <div
                   className={`w-full flex items-center transition-all duration-100 ${dragging ? "border-l" : ""} ${index === (current + 2) % skills.length && !dragging ? "border-l" : ""} ${index === (current - 2 < 0 ? current - 2 + skills.length : current - 2) && !dragging ? "border-r" : ""} ${!dragging && index === current ? " border-x" : ""} `}
                 >

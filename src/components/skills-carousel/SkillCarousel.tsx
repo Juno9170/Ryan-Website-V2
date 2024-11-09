@@ -3,7 +3,7 @@ import { type CarouselApi } from "@/components/ui/carousel";
 import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
 import { activeSkill } from "@/funcs/atoms";
 import { useStore } from "@nanostores/react";
-import './skillCarousel.css';
+import "./skillCarousel.css";
 import {
   Carousel,
   CarouselContent,
@@ -16,8 +16,7 @@ interface PropsSchema {
 interface SkillSchema {
   name: string;
   relatedSkills: String[];
-  fullBodyDescription: 
-    TypesafeStructuredTextGraphQlResponse,
+  fullBodyDescription: TypesafeStructuredTextGraphQlResponse;
   icon: {
     avifUrl?: string;
     webpUrl?: string;
@@ -47,17 +46,19 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
       setDragging(false);
       activeSkill.set(api.selectedScrollSnap());
     });
-    api.on("slidesChanged", () => {
-      
-    });
-  }, [api]);
+    api.on("slidesChanged", () => {});
+    api.scrollTo($activeSkill);
+  }, [api, $activeSkill]);
 
   return (
     <div className="flex max-h-[80vh]">
       <div className="flex flex-col justify-center pr-5 ">
         <div className="flex-1 flex flex-col justify-center">
           <ChevronUp
-            onClick={() => {api?.scrollPrev();activeSkill.set(api?.selectedScrollSnap() || 0);}}
+            onClick={() => {
+              api?.scrollPrev();
+              activeSkill.set(api?.selectedScrollSnap() || 0);
+            }}
             width={30}
             height={30}
             className=" hover:stroke-[#8DB9AA] transition-colors duration-150 ease-in-out stroke-[#86887B]"
@@ -65,7 +66,10 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
         </div>
         <div className="flex-1 flex flex-col justify-center">
           <ChevronDown
-            onClick={() => {api?.scrollNext();activeSkill.set(api?.selectedScrollSnap() || 0);}}
+            onClick={() => {
+              api?.scrollNext();
+              activeSkill.set(api?.selectedScrollSnap() || 0);
+            }}
             width={30}
             height={30}
             className="hover:stroke-[#8DB9AA] transition-colors duration-150 ease-in-out stroke-[#86887B]"
@@ -118,28 +122,36 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
                       api?.scrollTo(index);
                       activeSkill.set(index);
                     }}
-                  > 
+                  >
                     <div className="overflow-clip">
-                      <div className=" translate-y-2 hover:translate-y-0 transition-transform duration-300 group" style={{transitionTimingFunction: "var(--ease-spring-3)"}}>
-                      <svg 
-                          xmlns="http://www.w3.org/2000/svg" 
-                          width="24" 
-                          height="24" 
-                          viewBox="0 0 24 24" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          strokeWidth="2" 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
+                      <div
+                        className=" translate-y-2 hover:translate-y-0 transition-transform duration-300 group"
+                        style={{
+                          transitionTimingFunction: "var(--ease-spring-3)",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           className="lucide lucide-chevron-up chevron-icon"
                         >
-                          <path d="M17 15L12 10L7 15" className="chevron-path" />
+                          <path
+                            d="M17 15L12 10L7 15"
+                            className="chevron-path"
+                          />
                         </svg>
 
-                      <div className="flex justify-center items center w-full">
-                      <div className="rounded-full h-[5px] w-[5px] bg-[#797979] opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:delay-100 duration-0 transition-all"/> 
+                        <div className="flex justify-center items center w-full">
+                          <div className="rounded-full h-[5px] w-[5px] bg-[#797979] opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:delay-100 duration-0 transition-all" />
+                        </div>
                       </div>
-                      </div> 
                     </div>
                   </div>
                 </div>
