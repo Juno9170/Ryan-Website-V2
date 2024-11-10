@@ -197,7 +197,7 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
             </button>
           ) : (
             <>
-              <div className="flex justify-between text-[#86887B] relative">
+              <div className="flex justify-between text-[#474841] relative">
                 <div
                   className={`transition-all duration-300 absolute h-full bg-[#C0DCC3] rounded-full ${active ? "bg-black" : "bg-[#C0DCC3]"} ${activeIndex === 0 ? "left-0" : activeIndex === 2 ? "left-full -translate-x-full" : ""}`}
                   style={
