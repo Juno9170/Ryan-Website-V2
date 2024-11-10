@@ -1,7 +1,11 @@
 ---
 interface ImageSchema {
-    url: string;
     alt: string;
+    avifUrl: string;
+    webpUrl: string;
+    jpgUrl: string;
+    fallbackUrl: string;
+
 }
 
 interface ProjectSchema {
@@ -15,5 +19,17 @@ interface ProjectSchema {
     gallery: Array<ImageSchema>;
 }
 
+const { project } = Astro.props;
+const { projectTitle,slug,startDate,technologies,projectLink,longDescription,primaryImage,gallery } = project;
 
 ---
+<div>
+    <div class="inset-0 object-cover fixed">
+        <picture>
+            <source type="image/avif" srcset={primaryImage.avifUrl} />
+            <source type="image/webp" srcset={primaryImage.webpUrl} />
+            <source type="image/jpeg" srcset={primaryImage.jpgUrl} />
+            <img src={primaryImage.fallbackUrl} alt={primaryImage.alt} />
+        </picture>
+    </div>
+</div>
