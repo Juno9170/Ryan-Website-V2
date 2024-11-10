@@ -1,9 +1,9 @@
 {
   "extends": "astro/tsconfigs/strict",
+  
+  "type": "module",
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "target": "ES2022",
+    
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "allowImportingTsExtensions": true,

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button.tsx";
 import { ArrowRight, Github } from "lucide-react";
 import "open-props/easings";
 interface ProjectSchema {
-  githubLink: string;
-  projectLink: string;
+  githubLink?: string;
+  projectLink?: string;
   projectTitle: string;
   date: string;
   technologies: Array<string>;
@@ -19,7 +19,7 @@ interface ProjectSchema {
 }
 interface Props {
   project: ProjectSchema;
-  index: number;
+  index?: number;
   hoverable: boolean;
 }
 
