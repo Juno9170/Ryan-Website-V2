@@ -1,0 +1,127 @@
+---
+import SkillCarousel from "./SkillCarousel";
+import SkillDescription from "./SkillDescription";
+import type { TypesafeStructuredTextGraphQlResponse } from "react-datocms";
+import SkillCarouselMobile from "./SkillCarouselMobile";
+import BackgroundGrid from "../base-components/BackgroundGrid.astro";
+import BackgroundCircle from "../base-components/BackgroundCircle.astro";
+import SkillPagination from "./SkillPagination";
+
+interface SkillSchema {
+  name: string;
+  relatedSkills: String[];
+  fullBodyDescription: TypesafeStructuredTextGraphQlResponse;
+  icon: {
+    avifUrl?: string;
+    webpUrl?: string;
+    fallbackUrl: string;
+  };
+}
+
+interface AllSkillSchema {
+  data: {
+    allSkills: Array<SkillSchema>;
+  };
+}
+
+const fetchData = async (): Promise<SkillSchema[]> => {
+  try {
+    const response = await fetch("https://graphql.datocms.com/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${import.meta.env.DATOCMS_API_KEY}`,
+      },
+      body: JSON.stringify({
+        query: `
+          query MyQuery {
+          allSkills {
+            fullBodyDescription {
+              value
+              blocks {
+                ... on IconImageRecord {
+                  id
+                  __typename
+                  image {
+                    url
+                  }
+                }
+                ... on SkillBlockRecord {
+                  id
+                  __typename
+                  title
+                  projectLink
+                  shortDescription
+                }
+              }
+            }
+            name
+            relatedSkills
+            icon {
+              alt
+              avifUrl: url(imgixParams: {w: 300, fm: avif, q: 70})
+              webpUrl: url(imgixParams: {w: 300, fm: webp, q: 70})
+              fallbackUrl: url(imgixParams: {w: 300, fm: jpg, q: 100})
+            }
+          }
+        }
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const json: AllSkillSchema = await response.json();
+    return json.data.allSkills;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    return []; // Return an empty array or handle the error appropriately
+  }
+};
+
+const skills = await fetchData();
+---
+
+<style>
+  /* Add styles to hide the carousel on mobile */
+  .hide-on-mobile {
+    display: block;
+  }
+  .show-on-mobile {
+    display: none;
+  }
+  @media (max-width: 1024px) {
+    .hide-on-mobile {
+      display: none;
+    }
+    .show-on-mobile {
+      display: block;
+    }
+  }
+</style>
+
+<div
+  class="flex relative overflow-x-clip max-h-screen lg:max-h-none overflow-y-clip"
+>
+  <div class="hide-on-mobile">
+    <SkillCarousel skills={skills} client:load />
+  </div>
+
+  <div class="flex-1">
+    <SkillDescription
+      skills={skills.map((obj) => obj.fullBodyDescription)}
+      related={skills.map((obj) => obj.relatedSkills)}
+      client:load
+    />
+   
+    <div class="show-on-mobile">
+      <div class="flex justify-center pb-2">
+        <SkillPagination size={skills.length} client:load />
+      </div>
+      <SkillCarouselMobile skills={skills} client:load />
+    </div>
+  </div>
+</div>

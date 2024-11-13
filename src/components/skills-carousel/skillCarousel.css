@@ -1,0 +1,8 @@
+.chevron-path {
+    transition: d 0.2s ease; /* transition for smooth animation */
+  }
+  
+  .chevron-icon:hover .chevron-path {
+    d: path("M18 15L12 9L6 15"); /* original path for full-length chevron */
+  }
+  

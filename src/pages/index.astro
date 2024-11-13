@@ -3,6 +3,7 @@ import "../global.css";
 import Layout from "../layouts/Layout.astro";
 import BioHeader from "../components/home-page/BioHeader.astro";
 import TimeLineSection from "../components/time-line/TimeLineSection.tsx";
+import SkillSection from "@/components/skills-carousel/SkillSection.astro";
 interface ImageSchema {
   alt?: string;
   avifUrl?: string;
@@ -78,8 +79,11 @@ const projects = await fetchData();
   title="This is Home. Welcome!"
   description="Hello. Im Ryan Zhu, a computer science (CS) student at Carleton University."
 >
-  <div class="h-[1000vh]">
+  <div class="">
     <BioHeader />
     <TimeLineSection projects={projects} client:only="react" />
+    <div class="pt-[25vh] overflow-clip">
+      <SkillSection />
+    </div>
   </div>
 </Layout>

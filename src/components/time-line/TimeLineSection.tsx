@@ -83,7 +83,7 @@ const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
   }, [timeLineDataArray, viewportWidth, timeLineWidth]);
 
   return (
-    <div>
+    <div className="w-full overflow-clip">
       <TimeLine
         projects={projectsFiltered}
         timeLineWidth={timeLineWidth}
