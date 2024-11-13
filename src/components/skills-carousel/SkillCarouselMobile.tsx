@@ -83,7 +83,10 @@ const SkillCarouselMobile: React.FC<PropsSchema> = ({ skills }) => {
                 <div
                   className={`w-full flex items-center transition-all duration-100 ${dragging ? "border-l" : ""} ${index === (current + 2) % skills.length && !dragging ? "border-l" : ""} ${index === (current - 2 < 0 ? current - 2 + skills.length : current - 2) && !dragging ? "border-r" : ""} ${!dragging && index === current ? " border-x" : ""} `}
                 >
-                  <div className=" mx-auto">
+                  <div className=" mx-auto" onClick={() => {
+                      api?.scrollTo(index);
+                      activeSkill.set(index);
+                    }}>
                     <picture>
                       <source srcSet={skill.icon.avifUrl} type="image/avif" />
                       <source srcSet={skill.icon.webpUrl} type="image/webp" />
