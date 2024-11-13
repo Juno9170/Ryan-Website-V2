@@ -17,7 +17,7 @@ const SkillDescription: React.FC<PropsSchema> = ({ skills, related }) => {
         background:
           "radial-gradient(circle at 0% 50%, #e1ede9 0%, transparent 25%)",
       }}
-      className="px-4 md:px-6 lg:px-12 xl:px-20 h-[80vh] prose-hr:my-4 prose-p:my-2 prose-img:my-2 xxl:prose-xl xl:prose-lg lg:prose-base prose-sm"
+      className="px-4 md:px-6 lg:px-12 xl:px-20 h-[75vh] lg:h-[80vh] prose-hr:my-4 prose-p:my-2 prose-img:my-2 xxl:prose-xl xl:prose-lg lg:prose-base prose-sm"
     >
       <StructuredTextRenderer data={skills[$activeSkill]} />
       <div className="pt-0">

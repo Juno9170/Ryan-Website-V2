@@ -16,7 +16,7 @@ const SkillPagination = ({ size }: PaginationDotsProps) => {
       role="navigation"
       aria-label="Pagination"
     >
-      <div className="flex flex-row lg:flex-col gap-2">
+      <div className="flex flex-row lg:flex-col gap-3 lg:gap-5">
         {Array.from({ length: size }, (_, i) => (
           <Button
             key={i}
@@ -24,8 +24,8 @@ const SkillPagination = ({ size }: PaginationDotsProps) => {
             size="icon"
             className={`w-3  h-3 p-0 rounded-full ${
               i === $activeSkill
-                ? "bg-primary hover:bg-primary"
-                : "bg-muted hover:bg-muted-foreground/50"
+                ? "bg-[#507E71] hover:bg-primary"
+                : "bg-muted-foreground/20 hover:bg-muted-foreground/50"
             }`}
             onClick={() => handleDotClick(i)}
             aria-current={i === $activeSkill ? "page" : undefined}

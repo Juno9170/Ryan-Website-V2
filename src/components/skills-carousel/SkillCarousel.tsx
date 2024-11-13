@@ -10,6 +10,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import SkillPagination from "./SkillPagination";
 interface PropsSchema {
   skills: Array<SkillSchema>;
 }
@@ -52,8 +53,8 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
 
   return (
     <div className="flex max-h-[80vh]">
-      <div className="flex flex-col justify-center pr-5 ">
-        <div className="flex-1 flex flex-col justify-center">
+      <div className="flex flex-col justify-evenly pr-5 items-center pl-10">
+        <div className="">
           <ChevronUp
             onClick={() => {
               api?.scrollPrev();
@@ -64,7 +65,8 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
             className=" hover:stroke-[#8DB9AA] transition-colors duration-150 ease-in-out stroke-[#86887B]"
           />
         </div>
-        <div className="flex-1 flex flex-col justify-center">
+        <SkillPagination size={skills.length}/>
+        <div className="">
           <ChevronDown
             onClick={() => {
               api?.scrollNext();
