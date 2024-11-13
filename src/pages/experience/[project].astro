@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Layout from "../../layouts/Layout.astro";
-import Details from "./Details.astro";
+import Details from "./details.astro";
 import type { Lectern } from "lucide-react";
 interface SlugsSchema {
   data: {
@@ -18,12 +18,13 @@ interface SlugSchema {
 interface ProjectSchema{
     projectTitle: string;
     slug: string;
-    startDate: string;
+    startDate?: string;
+    date: string;
     technologies: Array<string>;
-    projectLink: string;
-    longDescription: string;
-    primaryImage: ImageSchema;
-    gallery: Array<ImageSchema>;
+    projectLink?: string;
+    longDescription?: string;
+    primaryImage?: ImageSchema;
+    gallery?: Array<ImageSchema>;
 }
 interface ProjectsSchema{
     data:{
@@ -96,6 +97,7 @@ const fetchData = async (): Promise<ProjectSchema | null> => {
               projectTitle
               slug
               startDate
+              date
               technologies
               projectLink
               longDescription
