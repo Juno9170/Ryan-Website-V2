@@ -1,5 +1,6 @@
 # Ryan Zhu: Portfolio
-> All about me :)
+ All about me :)
+> [Go to deployment! 🚀](https://ryanzhu.dev)
 
 
 ## 🚀 Project Structure
@@ -37,7 +38,7 @@
 ├── astro.config.mjs
 └── README.md
 ```
-## 🧞 Commands
+## 🧞 How to open code
 
 All commands are run from the root of the project, from a terminal:
 
