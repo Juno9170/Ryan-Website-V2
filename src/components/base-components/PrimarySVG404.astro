@@ -7,15 +7,15 @@ const { width = "100"} = Astro.props;
 ---
 
 <div style=`width: ${width}px;` class="relative">
-    <div class="absolute mr-10 left-0 right-0 top-1/4 transform -translate-y-1/2 text-2xl text-black lg:text-4xl xl:text-9xl xxl:text-[9rem] xxxl:text-[10rem]">
+    <div class="absolute mr-10 mt-2 left-0 right-0 top-1/4 transform -translate-y-1/2 text-2xl text-black lg:text-4xl xl:text-9xl xxl:text-[9rem] xxxl:text-[10rem]">
         <div class="flex font-Anderson">
-            <div class="flex-1 text-center">4</div>
+            <div class="flex-1 text-center innerB">4</div>
             <div class="flex-1"></div>
-            <div class="flex-1 text-center">4</div>
+            <div class="flex-1 text-center innerB">4</div>
         </div>
     </div>
     <div class="absolute mb-4 mr-10 left-0 right-0 bottom-1/4 transform translate-y-1/2 text-2xl text-black xl:text-9xl xxl:text-[9rem] xxxl:text-[10rem]">
-        <div class="flex-1 font-Anderson text-center">0</div>
+        <div class="flex-1 font-Anderson text-center inner">0</div>
     </div>
     
 <svg {width} viewBox="0 0 883 566" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,3 +50,22 @@ const { width = "100"} = Astro.props;
     </svg>
     
 </div>
+<style>
+  .inner{
+        background-color: #565656;
+        color: transparent;
+        text-shadow: 0px 2px 3px rgba(141, 185, 170, 0.8);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+    }
+    .innerB{
+        background-color: #565656;
+        color: transparent;
+        text-shadow: 0px 2px 3px rgba(192, 215, 201, 0.8);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+    }
+    
+</style>

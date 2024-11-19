@@ -1,8 +1,26 @@
 ---
 import PrimarySVG404 from '../components/base-components/PrimarySVG404.astro';
 import '../global.css'
+import Layout from '@/layouts/Layout.astro';
 ---
-
-<div class="w-full h-screen">
-        <PrimarySVG404 width='500'/>
-</div>
+<Layout title='404! Page not found :(' noBg={true}>
+    <div class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_2px,transparent_2px),linear-gradient(to_bottom,#8080800a_2px,transparent_2px)] bg-[size:120px_120px]"></div>
+ 
+        <div class=" w-full h-screen flex justify-center rounded-full fade">
+            <div class="pt-[20vh]">
+                <PrimarySVG404 width='500'/>
+                <div class="flex justify-center">The page you are looking for does not exist 😔</div>
+                <div class="flex justify-center pt-5">
+                    <a href="/">
+                        <button class="relative overflow-hidden rounded-xl bg-neutral-950 px-6 py-2 text-white transition-all duration-300 hover:bg-neutral-800 hover:ring-2 hover:ring-neutral-800 hover:ring-offset-2"><span class="relative">Go home :)</span></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+       
+</Layout>
+<style>
+    .fade{
+        background: -webkit-radial-gradient(circle, white 20%, rgba(0, 0, 0, 0) 70.7106781187%);
+    }
+</style>
