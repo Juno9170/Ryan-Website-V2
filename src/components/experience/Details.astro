@@ -1,32 +1,47 @@
 ---
 import { Badge } from "@/components/ui/badge";
 interface ImageSchema {
-    alt: string;
-    avifUrl: string;
-    webpUrl: string;
-    jpgUrl: string;
-    fallbackUrl: string;
-
+  alt: string;
+  avifUrl: string;
+  webpUrl: string;
+  jpgUrl: string;
+  fallbackUrl: string;
 }
 
 interface ProjectSchema {
-    projectTitle: string;
-    slug: string;
-    date: string;
-    startDate: string;
-    technologies: Array<string>;
-    projectLink: string;
-    longDescription: string;
-    primaryImage: ImageSchema;
-    gallery: Array<ImageSchema>;
+  projectTitle: string;
+  slug: string;
+  date: string;
+  startDate: string;
+  technologies: Array<string>;
+  projectLink: string;
+  longDescription: string;
+  primaryImage: ImageSchema;
+  gallery: Array<ImageSchema>;
 }
 
 const { project } = Astro.props;
-const { projectTitle,slug,startDate,technologies,projectLink,longDescription,primaryImage,gallery, date} = project;
+const {
+  projectTitle,
+  slug,
+  startDate,
+  technologies,
+  projectLink,
+  longDescription,
+  primaryImage,
+  gallery,
+  date,
+} = project;
 
 const formatDateRange = (start: Date, end: Date): string => {
-    const startMonth = start.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" });
-  const endMonth = end.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" });
+  const startMonth = start.toLocaleDateString("en-US", {
+    month: "short",
+    timeZone: "UTC",
+  });
+  const endMonth = end.toLocaleDateString("en-US", {
+    month: "short",
+    timeZone: "UTC",
+  });
   const startYear = start.getUTCFullYear();
   const endYear = end.getUTCFullYear();
 
@@ -35,85 +50,178 @@ const formatDateRange = (start: Date, end: Date): string => {
   } else {
     return `${startMonth} ${startYear} - ${endMonth} ${endYear}`;
   }
-}
-
-
+};
+import { Undo2 } from "lucide-react";
 ---
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const backButton = document.getElementById("backButton");
+
+    if (backButton) {
+      backButton.addEventListener("click", () => {
+        if (document.referrer) {
+          history.back();
+        } else {
+          // Navigate to /experience page
+          window.location.href = "/experience";
+        }
+      });
+    } else {
+      console.error("Back button element not found in the DOM.");
+    }
+  });
+  const button = document.getElementById("scrollButton");
+
+  // Add an event listener to the button
+  button &&
+    window &&
+    button.addEventListener("click", () => {
+      const halfwayPoint = window.innerHeight / 2;
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > halfwayPoint) {
+        // Scroll to the top
+        console.log("Up");
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      } else {
+        // Scroll to 100px from the bottom
+        console.log("Down");
+        console.log(halfwayPoint);
+        console.log(currentScroll);
+        console.log(document.documentElement.scrollHeight);
+        window.scrollTo({
+          top: document.documentElement.scrollHeight - window.innerHeight - 100,
+          behavior: "smooth",
+        });
+      }
+    });
+</script>
+
 <div>
-    <div class="inset-0 object-cover fixed -z-10">
+  <button class="fixed top-32 left-32 pointer-events-auto" id="backButton">
+    <div class="p-5 bg-white/20 rounded-full">
+      <Undo2 className="w-12 h-12" color="white" />
+    </div>
+  </button>
+  <div class="inset-0 object-cover fixed -z-20">
     <div>
-        <picture>
-            <source type="image/avif" srcset={primaryImage.avifUrl} />
-            <source type="image/webp" srcset={primaryImage.webpUrl} />
-            <source type="image/jpeg" srcset={primaryImage.jpgUrl} />
-            <img src={primaryImage.fallbackUrl} alt={primaryImage.alt} />
-        </picture>
-    </div>  
-    <div class="absolute left-0 right-0 h-1/6 top-1/2 -translate-y-1/2 bg-gradient-to-r  from-transparent to-transparent via-black/70"></div>
-    <p class="z-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-AndersonBold text-6xl text-white mix-blend-difference">
-        {projectTitle}
-    </p>    
+      <picture>
+        <source type="image/avif" srcset={primaryImage.avifUrl} />
+        <source type="image/webp" srcset={primaryImage.webpUrl} />
+        <source type="image/jpeg" srcset={primaryImage.jpgUrl} />
+        <img
+          src={primaryImage.fallbackUrl}
+          alt={primaryImage.alt}
+          class="w-full"
+        />
+      </picture>
     </div>
-    <div class="h-[90vh] invisible"/>
-    <div class="gridbg h-screen rounded-tr-[5rem] rounded-tl-[5rem] buldge p-20">
-        <div class="flex justify-between">
-            <h2 class="text-6xl text-white">{projectTitle}</h2>
-            <button class="group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-full bg-[#F8E9A6] px-6 font-medium text-[#64655E] shadow-dark-short">
-                <span>Visit Project</span>
-                <div class="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
-                        <path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                        </path>
-                    </svg>
-                </div>
-            </button>
-        </div>
-        <h3 class="text-xl text-[#eff3eb] py-3">{`${formatDateRange(new Date(startDate), new Date(date))}`}</h3>
-        <h3 class="text-lg font-AndersonLight text-[#eff3eb] pt-10">ABOUT THIS PROJECT</h3>
-        <p class="text-lg font-Anderson text-white pt-2">{longDescription}</p>
-        <div class="flex pt-4 gap-4">
-            {technologies.map((tech:string) => (
-                <Badge className="px-5 py-1 text-base bg-[#507E71]">{tech}</Badge>
-            ))}
-        </div>
+
+    <div
+      class="absolute left-0 right-0 h-1/6 top-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent to-transparent via-black/70 backdrop-blur-sm"
+    >
     </div>
+    <p
+      class="z-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-AndersonBold text-6xl text-white mix-blend-difference"
+    >
+      {projectTitle}
+    </p>
+  </div>
+
+  <div
+    class="gridbg h-screen rounded-tr-[5rem] rounded-tl-[5rem] buldge p-20 pt-10 z-20 absolute transform translate-y-[85%]"
+  >
+    <div class="flex justify-center pb-8 pt-2 cursor-pointer" id="scrollButton">
+      <div class="h-1 w-80 bg-white/50 rounded-full"></div>
+    </div>
+    <div class="flex justify-between">
+      <h2 class="text-6xl text-white">{projectTitle}</h2>
+
+      <button
+        class="group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-full bg-[#F8E9A6] px-6 font-medium text-[#64655E] shadow-dark-short"
+      >
+        <a href={projectLink} target="_blank"><span>Visit Project</span></a>
+        <div
+          class="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-1 group-hover:opacity-100"
+        >
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+          >
+            <path
+              d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+            >
+            </path>
+          </svg>
+        </div>
+      </button>
+    </div>
+    <h3 class="text-xl text-[#eff3eb] py-3">
+      {`${formatDateRange(new Date(startDate), new Date(date))}`}
+    </h3>
+    <h3 class="text-lg font-AndersonLight text-[#eff3eb] pt-10">
+      ABOUT THIS PROJECT
+    </h3>
+    <p class="text-lg font-Anderson text-white pt-2">{longDescription}</p>
+    <div class="flex pt-4 gap-4">
+      {
+        technologies.map((tech: string) => (
+          <Badge className="px-5 py-1 text-base bg-[#507E71]">{tech}</Badge>
+        ))
+      }
+    </div>
+  </div>
 </div>
 
 <style>
-    .buldge{
-        box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.8),
-              inset 0px 0px 15px rgba(0, 0, 0, 0.2);
-    }
-    .inner{
-        background-color: #565656;
-        color: transparent;
-        text-shadow: 0px 2px 3px rgba(141, 185, 170, 0.8);
-        -webkit-background-clip: text;
-        -moz-background-clip: text;
-        background-clip: text;
-    }
-    .gridbg {
+  body {
+    scroll-behavior: smooth;
+  }
+  .buldge {
+    box-shadow:
+      inset 0px 0px 10px rgba(255, 255, 255, 0.8),
+      inset 0px 0px 15px rgba(0, 0, 0, 0.2);
+  }
+  .inner {
+    background-color: #565656;
+    color: transparent;
+    text-shadow: 0px 2px 3px rgba(141, 185, 170, 0.8);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+  }
+  .gridbg {
     background: repeating-linear-gradient(
         to top,
         transparent,
-        #8DB9AA 60%,
-        #8DB9AA 100%
-    ),
-    repeating-linear-gradient(
+        #8db9aa 60%,
+        #8db9aa 100%
+      ),
+      repeating-linear-gradient(
         to right,
         transparent,
         transparent 76px,
         #8db9aa80 76px,
         #8db9aa80 79px
-    ),
-    repeating-linear-gradient(
+      ),
+      repeating-linear-gradient(
         to top,
         transparent,
         transparent 76px,
         #8db9aa80 76px,
         #8db9aa80 79px
-    );
-    background-color: #ECF2E4;
-}
-
+      );
+    background-color: #ecf2e4;
+  }
 </style>
