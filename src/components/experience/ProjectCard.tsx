@@ -81,7 +81,7 @@ const ProjectCard = ({
           />
         </picture>
       </div>
-      <Card className="md:w-[70%] border-none bg-[#8DB9AA80] rounded-none">
+      <Card className="md:w-[70%] border-none bg-[#8DB9AA80] rounded-none backdrop-blur-[3px] p-5">
         <CardHeader>
           <CardTitle>{projectTitle}</CardTitle>
           <CardDescription>{`${formatDate(dateObject)}`}</CardDescription>
@@ -100,10 +100,12 @@ const ProjectCard = ({
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline">
-            <Info className="mr-2 h-4 w-4" />
-            Read More
-          </Button>
+          <a href={`experience/${slug.trim()}`}>
+            <Button variant="outline">
+              <Info className="mr-2 h-4 w-4" />
+              Read More
+            </Button>
+          </a>
           <Button variant="outline">
             <ExternalLink className="mr-2 h-4 w-4" />
             View Project

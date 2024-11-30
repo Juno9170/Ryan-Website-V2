@@ -24,7 +24,7 @@ export const Default: Story = {
       avifUrl: "https://via.placeholder.com/1920",
       webpUrl: "https://via.placeholder.com/1920",
       jpgUrl: "https://via.placeholder.com/1920",
-      fallBackUrl: "https://via.placeholder.com/1920",
+      fallbackUrl: "https://via.placeholder.com/1920",
     },
   },
 };
