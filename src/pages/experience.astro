@@ -78,13 +78,17 @@ const projects = await fetchData();
 ---
 
 <Layout title="All of my experiences!" noBg>
-  <div class="pt-32 px-32 text-7xl font-AndersonBolder">Projects ⚡</div>
+  <div
+    class="flex justify-center items-center lg:justify-normal lg:items-start pt-24 lg:pt-32 lg:px-32 text-5xl xl:text-6xl xxl:text-7xl font-AndersonBolder"
+  >
+    Projects⚡
+  </div>
   <div
     class="absolute inset-0 -z-50 h-full w-full bg-[linear-gradient(to_right,#80808030_2px,transparent_2px),linear-gradient(to_bottom,#80808030_2px,transparent_2px)] bg-[size:120px_120px]"
   >
   </div>
-  <div class="pt-20">
-    <div class="flex flex-col gap-10 px-20">
+  <div class="pt-5 md:pt-12 lg:pt-20">
+    <div class="flex flex-col gap-10 px-2 md:px-10 lg:px-20">
       {
         projects.map((project, index) => {
           return (
