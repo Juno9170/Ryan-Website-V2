@@ -102,47 +102,54 @@ import { Undo2 } from "lucide-react";
 </script>
 
 <div>
-  <button class="fixed top-32 left-32 pointer-events-auto" id="backButton">
-    <div class="p-5 rounded-full backdrop-brightness-50">
-      <Undo2 className="w-12 h-12" color="white" />
+  <button
+    class="fixed top-24 left-16 lg:left-24 xl:top-32 xl:left-32 pointer-events-auto"
+    id="backButton"
+  >
+    <div
+      class="p-5 rounded-full backdrop-brightness-[30%] lg:backdrop-brightness-50"
+    >
+      <Undo2 className="h-7 w-7 lg:h-9 lg:w-9 xl:w-12 xl:h-12" color="white" />
     </div>
   </button>
   <div class="inset-0 object-cover fixed -z-20">
-    <div>
-      <picture>
-        <source type="image/avif" srcset={primaryImage.avifUrl} />
-        <source type="image/webp" srcset={primaryImage.webpUrl} />
-        <source type="image/jpeg" srcset={primaryImage.jpgUrl} />
-        <img
-          src={primaryImage.fallbackUrl}
-          alt={primaryImage.alt}
-          class="w-full"
-        />
-      </picture>
-    </div>
+    <picture>
+      <source type="image/avif" srcset={primaryImage.avifUrl} />
+      <source type="image/webp" srcset={primaryImage.webpUrl} />
+      <source type="image/jpeg" srcset={primaryImage.jpgUrl} />
+      <img
+        src={primaryImage.fallbackUrl}
+        alt={primaryImage.alt}
+        class="object-cover inset-0 h-screen w-full"
+      />
+    </picture>
 
     <div
-      class="absolute left-0 right-0 h-1/6 top-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent to-transparent via-black/70 backdrop-blur-sm"
+      class="absolute left-0 right-0 h-1/6 top-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent to-transparent via-black/70 backdrop-blur-lg lg:backdrop-blur-sm"
     >
     </div>
     <p
-      class="z-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 roboto-bold text-6xl text-white mix-blend-difference"
+      class="z-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 roboto-bold text-3xl xl:text-4xl xxl:text-6xl text-white lg:mix-blend-difference"
     >
       {projectTitle}
     </p>
   </div>
 
   <div
-    class="gridbg h-screen w-full rounded-tr-[5rem] rounded-tl-[5rem] buldge p-20 pt-10 z-20 absolute transform translate-y-[85%]"
+    class="gridbg h-screen w-full rounded-tr-[5rem] rounded-tl-[5rem] buldge p-8 md:p-16 lg:p-20 pt-10 z-20 absolute transform translate-y-[85%]"
   >
     <div class="flex justify-center pb-8 pt-2 cursor-pointer" id="scrollButton">
       <div class="h-1 w-80 bg-white/50 rounded-full"></div>
     </div>
-    <div class="flex justify-between">
-      <h2 class="text-6xl text-white font-AndersonBold">{projectTitle}</h2>
+    <div class="flex flex-col lg:flex-row justify-between">
+      <h2
+        class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white font-AndersonBold"
+      >
+        {projectTitle}
+      </h2>
 
       <button
-        class="group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-full bg-[#F8E9A6] px-6 font-medium text-[#64655E] shadow-dark-short"
+        class="group relative inline-flex h-8 lg:h-10 items-center justify-center overflow-hidden rounded-full bg-[#F8E9A6] my-5 lg:my-0 px-3 lg:px-6 font-medium text-[#64655E] shadow-dark-short"
       >
         <a href={projectLink} target="_blank"><span>Visit Project</span></a>
         <div
@@ -170,7 +177,7 @@ import { Undo2 } from "lucide-react";
     <h3 class="text-xl text-[#eff3eb] py-3">
       {`${formatDateRange(new Date(startDate), new Date(date))}`}
     </h3>
-    <h3 class="text-lg font-AndersonLight text-[#eff3eb] pt-10">
+    <h3 class="text-lg font-AndersonLight text-[#eff3eb] pt-4 md:pt-6 lg:pt-10">
       ABOUT THIS PROJECT
     </h3>
     <p class="text-lg font-Anderson text-white pt-2">{longDescription}</p>
