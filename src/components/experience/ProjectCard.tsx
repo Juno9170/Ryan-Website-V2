@@ -104,7 +104,7 @@ const ProjectCard = ({
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <a href={`./experience/${slug.trim()}`}>
+          <a href={`/experience/${slug.trim()}`}>
             <Button variant="outline" className="px-2 lg:px-4">
               <Info className="mr-2 h-4 w-4" />
               Read More
