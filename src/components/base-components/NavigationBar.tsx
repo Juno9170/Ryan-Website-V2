@@ -6,7 +6,7 @@ interface NavigationBarProps {
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = (props) => {
-  const [isMobile, setIsMobile] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [loc, setLoc] = useState("");
   const handleMobileNav = (href: string) => {
@@ -62,16 +62,17 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
     width2: 158.41,
     width3: 136.25,
   };
+  console.log(props.url.startsWith("/experience"));
 
   const [highlightWidth, setHighlightWidth] = useState<number>(
     props.url === "/"
       ? widths.width1
-      : props.url === "/experience"
+      : props.url.startsWith("/experience")
         ? widths.width2
         : widths.width3,
   );
   const [activeIndex, setActiveIndex] = useState<number>(
-    props.url === "/" ? 0 : props.url === "/experience" ? 1 : 2,
+    props.url === "/" ? 0 : props.url.startsWith("/experience") ? 1 : 2,
   );
   const [active, setActive] = useState<boolean>(false);
   const homeButtonRef = useRef<HTMLAnchorElement>(null);

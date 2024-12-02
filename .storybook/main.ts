@@ -1,5 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
-import path from 'node:path'
+import path from "node:path";
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
 
@@ -19,7 +19,7 @@ const config: StorybookConfig = {
   docs: {},
 
   typescript: {
-    reactDocgen: "react-docgen-typescript"
+    reactDocgen: "react-docgen-typescript",
   },
   async viteFinal(config) {
     return {
@@ -27,17 +27,20 @@ const config: StorybookConfig = {
       resolve: {
         alias: [
           {
-            find: '@/lib',
-            replacement: path.resolve(__dirname, '../src/lib'),
+            find: "@/lib",
+            replacement: path.resolve(__dirname, "../src/lib"),
           },
           {
-            find: '@/components',
-            replacement: path.resolve(__dirname, '../src/components'),
+            find: "@/components",
+            replacement: path.resolve(__dirname, "../src/components"),
+          },
+          {
+            find: "@/hooks",
+            replacement: path.resolve(__dirname, "../src/hooks"),
           },
         ],
       },
-    }
+    };
   },
-  
 };
 export default config;
