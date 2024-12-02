@@ -103,7 +103,7 @@ import { Undo2 } from "lucide-react";
 
 <div>
   <button class="fixed top-32 left-32 pointer-events-auto" id="backButton">
-    <div class="p-5 bg-white/20 rounded-full">
+    <div class="p-5 rounded-full backdrop-brightness-50">
       <Undo2 className="w-12 h-12" color="white" />
     </div>
   </button>
@@ -126,7 +126,7 @@ import { Undo2 } from "lucide-react";
     >
     </div>
     <p
-      class="z-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-AndersonBold text-6xl text-white mix-blend-difference"
+      class="z-0 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 roboto-bold text-6xl text-white mix-blend-difference"
     >
       {projectTitle}
     </p>
@@ -139,7 +139,7 @@ import { Undo2 } from "lucide-react";
       <div class="h-1 w-80 bg-white/50 rounded-full"></div>
     </div>
     <div class="flex justify-between">
-      <h2 class="text-6xl text-white">{projectTitle}</h2>
+      <h2 class="text-6xl text-white font-AndersonBold">{projectTitle}</h2>
 
       <button
         class="group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-full bg-[#F8E9A6] px-6 font-medium text-[#64655E] shadow-dark-short"

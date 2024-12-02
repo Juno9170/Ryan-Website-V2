@@ -1,5 +1,7 @@
 ---
 import "../global.css";
+import BackgroundCircle from "@/components/base-components/BackgroundCircle.astro";
+import BackgroundGrid from "@/components/base-components/BackgroundGrid.astro";
 import Layout from "../layouts/Layout.astro";
 import ProjectCard from "@/components/experience/ProjectCard";
 interface ImageSchema {
@@ -76,8 +78,9 @@ const projects = await fetchData();
 ---
 
 <Layout title="All of my experiences!" noBg>
+  <div class="pt-32 px-32 text-7xl font-AndersonBolder">Projects ⚡</div>
   <div
-    class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#80808030_2px,transparent_2px),linear-gradient(to_bottom,#80808030_2px,transparent_2px)] bg-[size:120px_120px]"
+    class="absolute inset-0 -z-50 h-full w-full bg-[linear-gradient(to_right,#80808030_2px,transparent_2px),linear-gradient(to_bottom,#80808030_2px,transparent_2px)] bg-[size:120px_120px]"
   >
   </div>
   <div class="pt-20">

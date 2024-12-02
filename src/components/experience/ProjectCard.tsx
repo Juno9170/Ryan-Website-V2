@@ -66,7 +66,7 @@ const ProjectCard = ({
 }: ProjectCardProps) => {
   const dateObject = new Date(date);
   return (
-    <div className="flex flex-col md:flex-row overflow-hidden shadow-lg bg-transparent rounded-3xl border-neutral-100 border-2">
+    <div className="flex flex-col md:flex-row overflow-hidden shadow-lg bg-transparent rounded-3xl hover:border-neutral-500 hover:shadow-2xl transition-all duration-200 ease-in border-neutral-100 border-2">
       <div className=" md:w-[30%] relative h-64 md:h-auto">
         <picture>
           <source srcSet={primaryImage.avifUrl} type="image/avif" />
@@ -90,12 +90,14 @@ const ProjectCard = ({
           <p className="mb-4">{shortDescription}</p>
           <div className="flex flex-wrap gap-2 mb-4">
             {technologies.map((tech, index) => (
-              <span
-                key={index}
-                className="bg-[#55766bbd] text-white font-AndersonLight px-3 py-2 rounded-full text-sm"
+              <div
+                aria-label={tech}
+                className="group cursor-pointer relative inline-flex py-2 items-center justify-center overflow-hidden rounded-full bg-[#55766bbd] px-6 font-medium text-neutral-50"
+                id={`${index}`}
               >
-                {tech}
-              </span>
+                <span className="absolute h-56 w-32 rounded-full bg-[#55766bbd] transition-all duration-300 group-hover:h-0 group-hover:w-0"></span>
+                <span className="relative">{tech}</span>
+              </div>
             ))}
           </div>
         </CardContent>
