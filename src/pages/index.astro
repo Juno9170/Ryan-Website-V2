@@ -16,6 +16,7 @@ interface ProjectSchema {
   githubLink: string;
   projectLink: string;
   projectTitle: string;
+  slug: string;
   date: string;
   technologies: Array<string>;
   shortDescription: string;
@@ -45,6 +46,7 @@ const fetchData = async (): Promise<ProjectSchema[]> => {
     					projectLink
               projectTitle
               date
+              slug
               technologies
               shortDescription
               primaryImage {

@@ -66,8 +66,8 @@ const ProjectCard = ({
 }: ProjectCardProps) => {
   const dateObject = new Date(date);
   return (
-    <div className="flex flex-col md:flex-row overflow-hidden shadow-lg bg-transparent rounded-3xl hover:border-neutral-500 hover:shadow-2xl transition-all duration-200 ease-in border-neutral-100 border-2">
-      <div className=" md:w-[30%] relative h-64 md:h-auto">
+    <div className="flex flex-col lg:flex-row overflow-hidden shadow-lg bg-transparent rounded-3xl hover:border-neutral-500 hover:shadow-2xl transition-all duration-200 ease-in border-neutral-100 border-2">
+      <div className=" lg:w-[30%] relative h-64 lg:h-auto">
         <picture>
           <source srcSet={primaryImage.avifUrl} type="image/avif" />
           <source srcSet={primaryImage.webpUrl} type="image/webp" />
@@ -81,12 +81,12 @@ const ProjectCard = ({
           />
         </picture>
       </div>
-      <Card className="md:w-[70%] border-none bg-[#8DB9AA80] rounded-none backdrop-blur-[3px] p-5">
+      <Card className="lg:w-[70%] border-none bg-[#8DB9AA80] rounded-none backdrop-blur-[3px] p-5">
         <CardHeader className="p-2 lg:p-6 ">
           <CardTitle>{projectTitle}</CardTitle>
           <CardDescription>{`${formatDate(dateObject)}`}</CardDescription>
         </CardHeader>
-        <CardContent className="px-2 lg:px-6 lg:p-6 ">
+        <CardContent className="py-0 px-2 lg:px-6 ">
           <p className="mb-4">{shortDescription}</p>
           <div className="flex flex-wrap gap-2 mb-4">
             {technologies.map((tech, index) => (
@@ -103,7 +103,7 @@ const ProjectCard = ({
             ))}
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between">
+        <CardFooter className="flex justify-between py-2 lg:py-6">
           <a href={`experience/${slug.trim()}`}>
             <Button variant="outline" className="px-2 lg:px-4">
               <Info className="mr-2 h-4 w-4" />
