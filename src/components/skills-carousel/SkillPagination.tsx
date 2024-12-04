@@ -16,7 +16,7 @@ const SkillPagination = ({ size }: PaginationDotsProps) => {
       role="navigation"
       aria-label="Pagination"
     >
-      <div className="flex flex-row lg:flex-col gap-3 lg:gap-5">
+      <div className="flex flex-row md:flex-col gap-3 lg:gap-5">
         {Array.from({ length: size }, (_, i) => (
           <Button
             key={i}

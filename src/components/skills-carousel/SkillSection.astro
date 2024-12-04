@@ -93,7 +93,7 @@ const skills = await fetchData();
   .show-on-mobile {
     display: none;
   }
-  @media (max-width: 1024px) {
+  @media (max-width: 767px) {
     .hide-on-mobile {
       display: none;
     }
@@ -116,7 +116,7 @@ const skills = await fetchData();
       related={skills.map((obj) => obj.relatedSkills)}
       client:load
     />
-   
+
     <div class="show-on-mobile">
       <div class="flex justify-center pb-2">
         <SkillPagination size={skills.length} client:load />
