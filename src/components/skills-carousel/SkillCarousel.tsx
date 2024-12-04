@@ -65,7 +65,7 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
             className=" hover:stroke-[#8DB9AA] transition-colors duration-150 ease-in-out stroke-[#86887B]"
           />
         </div>
-        <SkillPagination size={skills.length}/>
+        <SkillPagination size={skills.length} />
         <div className="">
           <ChevronDown
             onClick={() => {
@@ -94,7 +94,7 @@ const SkillCarousel: React.FC<PropsSchema> = ({ skills }) => {
             dragThreshold: 200,
           }}
           orientation="vertical"
-          className="w-96 bg-white"
+          className=" w-72 xl:w-96 bg-white"
         >
           <CarouselContent
             className="-mt-1 h-[80vh]
