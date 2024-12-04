@@ -4,9 +4,9 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
-  favicon?: string;
   suffix?: string;
   noBg?: boolean;
+  is404?:boolean;
 }
 import "../global.css";
 const response = await fetch("https://graphql.datocms.com/", {
@@ -19,9 +19,6 @@ const response = await fetch("https://graphql.datocms.com/", {
   body: JSON.stringify({
     query: `query MyQuery {
   _site {
-    favicon {
-      url
-    }
     globalSeo {
       siteName
       titleSuffix
@@ -39,6 +36,7 @@ const response = await fetch("https://graphql.datocms.com/", {
   }),
 });
 
+
 const json = await response.json();
 
 const currentPath = Astro.url.pathname;
@@ -48,9 +46,11 @@ const {
   suffix = json.data._site.globalSeo.titleSuffix,
   description = json.data._site.globalSeo.fallbackSeo.description,
   ogImage = json.data._site.globalSeo.fallbackSeo.image.url,
-  favicon = json.data._site.favicon.url,
   noBg = false,
+  is404 = false,
 } = Astro.props;
+
+const favicon = is404 ? "/favicon/favicon404.png" :currentPath === "/" ? "/favicon/favicon1.png" : currentPath.startsWith("/experience") ? "/favicon/favicon2.png" : currentPath === "/contact" ? "/favicon/favicon3.png" : "/favicon/favicon404.png";
 ---
 
 <!doctype html>
