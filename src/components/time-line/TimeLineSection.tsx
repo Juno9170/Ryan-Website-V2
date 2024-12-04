@@ -1,10 +1,12 @@
 import React, { useMemo, useCallback, useState, useEffect } from "react";
 import TimeLine from "./TimeLine";
+import TimeLineMobile from "./TimeLineMobile";
 interface ProjectSchema {
   githubLink: string;
   projectLink: string;
   projectTitle: string;
   date: string;
+  slug: string;
   technologies: Array<string>;
   shortDescription: string;
   primaryImage: {
@@ -21,7 +23,7 @@ interface TimeLineProps {
 }
 
 const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
-  const timeLineWidth = 400;
+  const timeLineWidth = 150;
   const projectsFiltered = projects;
 
   const [viewportWidth, setViewportWidth] = useState(() =>
@@ -84,14 +86,24 @@ const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
 
   return (
     <div className="w-full overflow-clip">
-      <TimeLine
-        projects={projectsFiltered}
-        timeLineWidth={timeLineWidth}
-        viewportWidth={viewportWidth}
-        initOffset={snappingOffsets[snappingOffsets.length - 1]}
-        snappingOffsets={snappingOffsets}
-        timeLineDataArray={timeLineDataArray}
-      />
+      {viewportWidth >= 1024 ? (
+        <>
+          <p className="text-6xl font-Anderson px-20 py-10">Time Line</p>
+          <TimeLine
+            projects={projectsFiltered}
+            timeLineWidth={timeLineWidth}
+            viewportWidth={viewportWidth}
+            initOffset={snappingOffsets[snappingOffsets.length - 1]}
+            snappingOffsets={snappingOffsets}
+            timeLineDataArray={timeLineDataArray}
+          />
+        </>
+      ) : (
+        <div className="flex flex-col justify-center w-full overflow-clip">
+          <p className="text-3xl font-AndersonBold px-6 pt-10">Time Line</p>
+          <TimeLineMobile projects={projectsFiltered} />
+        </div>
+      )}
     </div>
   );
 };

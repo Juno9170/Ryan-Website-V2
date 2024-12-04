@@ -7,6 +7,7 @@ interface ProjectSchema {
   projectLink: string;
   projectTitle: string;
   date: string;
+  slug: string;
   technologies: Array<string>;
   shortDescription: string;
   primaryImage: {
