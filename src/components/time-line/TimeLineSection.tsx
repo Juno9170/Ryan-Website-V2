@@ -6,6 +6,7 @@ interface ProjectSchema {
   projectLink: string;
   projectTitle: string;
   date: string;
+  startDate?: string;
   slug: string;
   technologies: Array<string>;
   shortDescription: string;
@@ -25,6 +26,12 @@ interface TimeLineProps {
 const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
   const timeLineWidth = 150;
   const projectsFiltered = projects;
+  projectsFiltered.sort((a: ProjectSchema, b: ProjectSchema) => {
+    const aStartDate = new Date(a.startDate || a.date);
+    const bStartDate = new Date(b.startDate || b.date);
+
+    return aStartDate.getTime() - bStartDate.getTime();
+  });
 
   const [viewportWidth, setViewportWidth] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth : 0,
@@ -59,7 +66,10 @@ const TimeLineSection: React.FC<TimeLineProps> = ({ projects }) => {
   }
 
   const timeLineDataArray = useMemo(() => {
-    const dates = projects.map((obj) => obj.date);
+    const dates = projects.map((obj) =>
+      obj.startDate ? obj.startDate : obj.date,
+    );
+    console.log(dates);
     return calculateDateDifferences(dates);
   }, [projects]);
 
