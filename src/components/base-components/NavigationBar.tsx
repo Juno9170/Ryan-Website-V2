@@ -22,7 +22,6 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
   useEffect(() => {
     if (typeof window === "undefined") return;
     setLoc(window.location.pathname);
-    console.log(window.location.pathname);
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1024);
       if (window.innerWidth > 1024) setMenuOpen(false);
@@ -62,7 +61,6 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
     width2: 158.41,
     width3: 136.25,
   };
-  console.log(props.url.startsWith("/experience"));
 
   const [highlightWidth, setHighlightWidth] = useState<number>(
     props.url === "/"

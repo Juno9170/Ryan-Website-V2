@@ -82,17 +82,11 @@ import { Undo2 } from "lucide-react";
 
       if (currentScroll > halfwayPoint) {
         // Scroll to the top
-        console.log("Up");
         window.scrollTo({
           top: 0,
           behavior: "smooth",
         });
       } else {
-        // Scroll to 100px from the bottom
-        console.log("Down");
-        console.log(halfwayPoint);
-        console.log(currentScroll);
-        console.log(document.documentElement.scrollHeight);
         window.scrollTo({
           top: document.documentElement.scrollHeight - window.innerHeight - 100,
           behavior: "smooth",
