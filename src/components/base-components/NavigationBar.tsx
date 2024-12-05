@@ -101,12 +101,12 @@ const NavigationBar: React.FC<NavigationBarProps> = (props) => {
   const resetHighlight = () => {
     props.url === "/"
       ? setHighlightWidth(widths.width1)
-      : props.url === "/experience"
+      : props.url.startsWith("/experience")
         ? setHighlightWidth(widths.width2)
         : setHighlightWidth(widths.width3);
     props.url === "/"
       ? setActiveIndex(0)
-      : props.url === "/experience"
+      : props.url.startsWith("/experience")
         ? setActiveIndex(1)
         : setActiveIndex(2);
   };
