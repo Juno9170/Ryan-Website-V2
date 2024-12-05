@@ -7,6 +7,7 @@ interface ProjectSchema {
   projectLink?: string;
   projectTitle: string;
   date: string;
+  startDate?: string;
   technologies: Array<string>;
   shortDescription: string;
   slug: string;
@@ -82,7 +83,9 @@ const TimeLineProject: React.FC<Props> = ({ project, index, hoverable }) => {
             <h2 className="text-2xl font-bold mb-2 transition-all ease-in-out translate-y-0 duration-700 group-hover:-translate-y-6">
               {project.projectTitle}
               <br />
-              <p className=" text-xs font-AndersonLight">{project.date}</p>
+              <p className=" text-xs font-AndersonLight">
+                {project.startDate ? project.startDate : project.date}
+              </p>
             </h2>
             <div className="overflow-clip transition-all duration-500 ease-in-out max-h-0 group-hover:max-h-full">
               <p className="">{project.shortDescription}</p>

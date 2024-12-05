@@ -18,6 +18,7 @@ interface ProjectSchema {
   projectTitle: string;
   slug: string;
   date: string;
+  startDate?: string;
   technologies: Array<string>;
   shortDescription: string;
   primaryImage: ImageSchema;
@@ -46,6 +47,7 @@ const fetchData = async (): Promise<ProjectSchema[]> => {
     					projectLink
               projectTitle
               date
+              startDate
               slug
               technologies
               shortDescription
