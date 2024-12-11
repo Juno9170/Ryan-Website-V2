@@ -14,7 +14,7 @@ const SkillProjectBlock: React.FC<SkillProjectBlockProps> = ({
   link = "",
 }) => {
   return (
-    <Card className="min-w-full h-fit pb-2 lg:pb-0 lg:h-40">
+    <Card className="min-w-full pb-2 lg:pb-0 h-fit mb-0 lg:mb-2">
       <CardContent className="px-4 py-1 lg:py-4">
         <h4 className="font-semibold flex justify-between">
           {title}{" "}

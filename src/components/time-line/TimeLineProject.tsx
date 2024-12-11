@@ -62,7 +62,7 @@ const TimeLineProject: React.FC<Props> = ({ project, index, hoverable }) => {
     <div ref={ref}>
       {isInViewport ? (
         <div
-          className={`w-72 h-80 overflow-clip relative rounded-2xl xl:rounded-[1.25rem] flex ${hoverable ? "group" : ""}`}
+          className={`w-72 h-80 lg:h-96 overflow-clip relative rounded-2xl xl:rounded-[1.25rem] flex ${hoverable ? "group" : ""}`}
         >
           <picture>
             <source srcSet={avifUrl} type="image/avif" />
@@ -79,7 +79,7 @@ const TimeLineProject: React.FC<Props> = ({ project, index, hoverable }) => {
 
           <div className="absolute inset-0 bg-gradient-to-t from-[#8db9aab2] from-25% to-[#d9d9d96c] z-10 group-hover:brightness-50 group-hover:backdrop-blur-sm transition-all duration-500 ease-in-out" />
 
-          <div className="relative z-20 h-full flex flex-col justify-end p-6  text-white w-full">
+          <div className="relative z-20 h-full flex flex-col justify-end px-6 py-2  text-white w-full">
             <h2 className="text-2xl font-bold mb-2 transition-all ease-in-out translate-y-0 duration-700 group-hover:-translate-y-6">
               {project.projectTitle}
               <br />
