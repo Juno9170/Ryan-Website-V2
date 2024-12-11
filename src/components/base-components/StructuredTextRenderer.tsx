@@ -37,12 +37,12 @@ const StructuredTextRenderer: React.FC<PropsSchema> = ({ data }) => {
             <img
               src={record.image.url}
               alt="skill icon mini"
-              className="w-10"
+              className="w-10 inline-flex lg:w-20 my-0"
             />
           );
         } else if (isSkillBlockRecord(record)) {
           return (
-            <div className=" inline-flex my-2 lg:my-0 mr-10 min-w-full lg:w-1/3 lg:min-w-0 prose-h4:my-2">
+            <div className=" inline-flex my-2 lg:my-0 mr-10 min-w-full lg:w-1/3 lg:min-w-0 prose-h4:my-2 mb-2">
               <SkillProjectBlock
                 title={record.title}
                 description={record.shortDescription}

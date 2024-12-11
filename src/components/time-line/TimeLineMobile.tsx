@@ -15,6 +15,7 @@ interface ProjectSchema {
   projectLink: string;
   projectTitle: string;
   date: string;
+  startDate?: string;
   slug: string;
   technologies: Array<string>;
   shortDescription: string;
@@ -75,9 +76,11 @@ const TimeLineMobile: React.FC<TimeLineProps> = ({ projects }) => {
   return (
     <>
       <div className="flex justify-center roboto-regular py-1">
-        {projects[current].date
-          ? formatDate(projects[current].date)
-          : "date unavailable"}
+        {projects[current].startDate
+          ? formatDate(projects[current].startDate)
+          : projects[current].date
+            ? formatDate(projects[current].date)
+            : "date unavailable"}
       </div>
       <div className="flex justify-center roboto-regular py-1">
         {current}/{projects.length}
